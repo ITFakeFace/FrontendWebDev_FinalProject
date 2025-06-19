@@ -1,0 +1,32 @@
+[
+  {
+    "username": "User1",
+    "email": "user1@example.com",
+    "password": "123456",
+    "avatar": null,
+    "dob": null,
+    "gender": null,
+    "phone": null,
+    "favorite": []
+  },
+  {
+    "username": "User2",
+    "email": "user2@example.com",
+    "password": "123456",
+    "avatar": null,
+    "dob": null,
+    "gender": null,
+    "phone": null,
+    "favorite": []
+  },
+  {
+    "username": "User3",
+    "email": "user3@example.com",
+    "password": "123456",
+    "avatar": null,
+    "dob": null,
+    "gender": null,
+    "phone": null,
+    "favorite": []
+  }
+]

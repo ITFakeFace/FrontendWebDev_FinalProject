@@ -1,12 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 @import 'primereact/resources/themes/lara-light-blue/theme.css';
 @import 'primereact/resources/primereact.min.css';
 @import 'primeicons/primeicons.css';
 @import "tailwindcss";
+@import 'boxicons/css/boxicons.min.css';
+
+* {
+  box-sizing: border-box;
+}
 
 body {
-  font-size: 16px;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
 }

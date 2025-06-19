@@ -7,7 +7,7 @@ import ReciassistLogoFit from '../assets/logo/Reciassist_Logo_Fit.png';
 import Anonymous from '../assets/user/avatars/Anonymous.png';
 import Ava1 from '../assets/user/avatars/ava1.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faSignIn, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faSignIn, faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useUserStore } from "../context/AuthContext";
 import SideBarItemUrl from "./components/SideBarItemUrl";
 import SideBarItemClick from "./components/SideBarItemClick";
@@ -15,15 +15,21 @@ import SideBarItemClick from "./components/SideBarItemClick";
 const MainLayout = () => {
   const [showLeftSidebar, setShowLeftSidebar] = useState(false);
   const [showRightSidebar, setShowRightSidebar] = useState(false);
-  const [logged, setLogged] = useState(false);
   const { user, setUser, logout } = useUserStore();
 
   const checkLogged = () => {
-    const isLogged = localStorage.getItem('logged');
-    if (isLogged) {
-      setLogged(true);
+    const session = localStorage.getItem("token");
+    if (session) {
+      const parsed = JSON.parse(session);
+      // Kiểm tra thời gian hết hạn
+      if (parsed.expiresAt && Date.now() < parsed.expiresAt) {
+        setUser(parsed.user);
+      } else {
+        logout();
+      }
     }
-  }
+  };
+
 
   useEffect(() => {
     checkLogged();
@@ -39,7 +45,7 @@ const MainLayout = () => {
 
   const rightSidebarHeaderTemplate = () => {
     return (
-      <div className="text-2xl font-semibold">{logged == true && user ? user.username : "Anonymous"}</div>
+      <div className="text-2xl font-semibold">{user ? user.username : "Anonymous"}</div>
     )
   }
 
@@ -63,9 +69,13 @@ const MainLayout = () => {
         header={rightSidebarHeaderTemplate}
       >
         <div className="mt-10">
-          {logged == true ?
+          {user ?
             <div className="flex flex-col gap-y-10">
-              <Button>Profile</Button>
+              <SideBarItemUrl
+                icon={<FontAwesomeIcon icon={faUser} />}
+                label={"Profile"}
+                url={"/profile"}
+              />
               <SideBarItemClick
                 icon={<FontAwesomeIcon icon={faSignOut} />}
                 label={"Sign Out"}
@@ -93,8 +103,15 @@ const MainLayout = () => {
             </Button>
           </div>
           <div className="right-box flex flex-row items-center gap-5">
-            <Button onClick={() => setShowRightSidebar(!showLeftSidebar)} className="overflow-hidden border-2 p-2 rounded-full">
-              <img src={logged == true ? Ava1 : Anonymous} className="w-7"></img>
+            <Button
+              onClick={() => setShowRightSidebar(!showRightSidebar)}
+              className="w-12 h-12 border-2 p-0 rounded-full overflow-hidden flex items-center justify-center"
+            >
+              <img
+                src={user ? Ava1 : Anonymous}
+                className="w-full h-full object-cover rounded-full"
+                alt="Avatar"
+              />
             </Button>
           </div>
         </header>
