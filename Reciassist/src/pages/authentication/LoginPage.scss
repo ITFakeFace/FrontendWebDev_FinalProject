@@ -17,6 +17,15 @@
     box-shadow: 0 0 30px rgba(0,0,0,.2);
     overflow: hidden;
   }
+  
+  .container.no-transition {
+    .form-box,
+    .toggle-panel,
+    .toggle-box::before {
+      transition: none !important;
+      transition-delay: 0s !important;
+    } 
+  }
 
   .form-box{
     position: absolute;

@@ -18,20 +18,7 @@ const MainLayout = () => {
   const [showLeftSidebar, setShowLeftSidebar] = useState(false);
   const [showRightSidebar, setShowRightSidebar] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const { user, setUser, logout } = useUserStore();
-
-  // Kiểm tra đăng nhập
-  const checkLogged = () => {
-    const session = localStorage.getItem("loggedUser");
-    if (session) {
-      const parsed = JSON.parse(session);
-      if (parsed.expiresAt && Date.now() < parsed.expiresAt) {
-        setUser(parsed.user);
-      } else {
-        logout();
-      }
-    }
-  };
+  const { user, logout } = useUserStore();
 
   // Áp dụng dark mode cho toàn app (html tag)
   useEffect(() => {
@@ -42,10 +29,6 @@ const MainLayout = () => {
       root.classList.remove("dark");
     }
   }, [isDarkMode]);
-
-  useEffect(() => {
-    checkLogged();
-  }, []);
 
   const leftSidebarHeaderTemplate = () => (
     <div className="flex flex-row items-center gap-3 justify-between w-full">
@@ -73,7 +56,7 @@ const MainLayout = () => {
         header={leftSidebarHeaderTemplate}
         showCloseIcon={false}
       >
-        <div className="mt-10 flex flex-col gap-y-10">]
+        <div className="mt-10 flex flex-col gap-y-10">
           <SideBarItemUrl icon={<FontAwesomeIcon icon={faHome} />} label="Homepage" url="/" />
         </div>
       </Sidebar>

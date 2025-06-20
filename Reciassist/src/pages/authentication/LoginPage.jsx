@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import "./LoginPage.scss";
-import { login, register } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../context/AuthContext";
 
 const LoginPage = () => {
+  const { login, register } = useUserStore();
   let emptyLogin = {
     username: '',
     password: '',
@@ -21,6 +22,7 @@ const LoginPage = () => {
 
   const [loginForm, setLoginForm] = useState(emptyLogin);
   const [registerForm, setRegisterForm] = useState(emptyRegister);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const containerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -66,11 +68,25 @@ const LoginPage = () => {
   }
 
   const loginBtnClick = () => {
-    containerRef.current?.classList.remove('active');
+    if (!hasInteracted) {
+      setHasInteracted(true);
+      setTimeout(() => {
+        containerRef.current?.classList.remove('active');
+      }, 0);
+    } else {
+      containerRef.current?.classList.remove('active');
+    }
   };
 
   const registerBtnClick = () => {
-    containerRef.current?.classList.add('active');
+    if (!hasInteracted) {
+      setHasInteracted(true);
+      setTimeout(() => {
+        containerRef.current?.classList.add('active');
+      }, 0);
+    } else {
+      containerRef.current?.classList.add('active');
+    }
   };
 
   useEffect(() => {
@@ -81,7 +97,7 @@ const LoginPage = () => {
   }, []);
 
   return (
-    <div className="container" ref={containerRef}>
+    <div className={`container ${hasInteracted ? '' : 'no-transition'}`} ref={containerRef}>
       <div className="form-box login">
         <form onSubmit={(e) => loginClick(e)}>
           <h1>Login</h1>

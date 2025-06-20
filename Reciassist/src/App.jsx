@@ -2,6 +2,9 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import LoginPage from './pages/authentication/LoginPage'
+import RecipeFormPage from './pages/recipe-form/RecipeFormPage';
+import { useUserStore } from './context/AuthContext';
+import { useEffect } from 'react';
 
 function Dashboard() {
   return (
@@ -13,11 +16,17 @@ function Dashboard() {
 }
 
 function App() {
+  const { bootstrap } = useUserStore();
+
+  useEffect(() => {
+    bootstrap();
+  }, []);
 
   return (
     <Routes>
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Dashboard />} />
+      <Route path='/' element={<MainLayout />}>
+        <Route path="" element={<Dashboard />} />
+        <Route path="recipe/:id" element={<RecipeFormPage />} />
       </Route>
 
       <Route path="/sign-in" element={<LoginPage />} />
