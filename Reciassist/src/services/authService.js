@@ -1,7 +1,7 @@
 import mockUsers from './datas/users.json';
 
 const STORAGE_KEY = 'mockUsers';
-const SESSION_KEY = 'token';
+const SESSION_KEY = 'loggedUser';
 
 function initUsers() {
   const existing = localStorage.getItem(STORAGE_KEY);

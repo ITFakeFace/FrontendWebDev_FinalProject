@@ -38,12 +38,17 @@ const LoginPage = () => {
     }
   }
 
-  const registerClick = () => {
-    register({
-      username: registerForm.username,
-      email: registerForm.email,
-      password: registerForm.password
-    });
+  const registerClick = (e) => {
+    try {
+      e.preventDefault();
+      register({
+        username: registerForm.username,
+        email: registerForm.email,
+        password: registerForm.password
+      });
+    } catch (ex) {
+
+    }
   }
 
   const onLoginChangeProps = (value, field) => {
@@ -109,7 +114,7 @@ const LoginPage = () => {
       </div>
 
       <div className="form-box register">
-        <form action={""}>
+        <form onSubmit={(e) => registerClick(e)}>
           <h1>Registration</h1>
           <div className="input-box">
             <input type="text" value={registerForm.username}

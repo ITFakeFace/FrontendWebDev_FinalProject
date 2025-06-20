@@ -16,11 +16,12 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/sign-in" element={<LoginPage />} />
-      
       <Route element={<MainLayout />}>
         <Route path="/" element={<Dashboard />} />
       </Route>
+
+      <Route path="/sign-in" element={<LoginPage />} />
+
     </Routes>
   )
 }

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 const checkLogged = () => {
-  const session = localStorage.getItem('sessionUser');
+  const session = localStorage.getItem('loggedUser');
   if (session) {
     const parsed = JSON.parse(session);
     // Kiểm tra thời gian hết hạn
@@ -9,7 +9,7 @@ const checkLogged = () => {
       setUser(parsed.user);
       setLogged(true);
     } else {
-      localStorage.removeItem('sessionUser');
+      localStorage.removeItem('loggedUser');
       logout();
       setLogged(false);
     }
