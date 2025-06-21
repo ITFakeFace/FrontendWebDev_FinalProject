@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./LoginPage.scss";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserStore } from "../../context/AuthContext";
 
 const LoginPage = () => {
@@ -25,15 +25,18 @@ const LoginPage = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
   const containerRef = useRef(null);
   const navigate = useNavigate();
-
+  const location = useLocation();
 
   const loginClick = (e) => {
     try {
       e.preventDefault();
-      login({
+      var result = login({
         username: loginForm.username,
         password: loginForm.password
       });
+      if (result != null) {
+        navigate('/');
+      }
       navigate('/');
     } catch (ex) {
       console.log(ex);
@@ -43,11 +46,14 @@ const LoginPage = () => {
   const registerClick = (e) => {
     try {
       e.preventDefault();
-      register({
+      var result = register({
         username: registerForm.username,
         email: registerForm.email,
         password: registerForm.password
       });
+      if (result != null) {
+        navigate('/sign-in');
+      }
     } catch (ex) {
 
     }
@@ -94,6 +100,13 @@ const LoginPage = () => {
     return () => {
       document.body.classList.remove('login-body');
     };
+  }, []);
+
+  useEffect(() => {
+    const isSignUpPage = location.pathname.endsWith('/sign-up');
+    if (isSignUpPage) {
+      containerRef.current?.classList.add('active');
+    }
   }, []);
 
   return (

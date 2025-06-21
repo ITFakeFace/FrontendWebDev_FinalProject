@@ -1,0 +1,506 @@
+[
+  {
+    "id": 1,
+    "title": "Flan Cake",
+    "description": "A soft and creamy dessert with a rich caramel topping.",
+    "image": null,
+    "ingredients": [
+      {
+        "name": "Eggs",
+        "quantity": 4,
+        "unit": "pcs"
+      },
+      {
+        "name": "Condensed milk",
+        "quantity": 1,
+        "unit": "can"
+      },
+      {
+        "name": "Fresh milk (unsweetened)",
+        "quantity": 500,
+        "unit": "ml"
+      },
+      {
+        "name": "Sugar",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "name": "Water",
+        "quantity": 50,
+        "unit": "ml"
+      },
+      {
+        "name": "Vanilla",
+        "quantity": 1,
+        "unit": "tube"
+      }
+    ],
+    "cookingTime": 60,
+    "categories": [
+      "Dessert",
+      "Cake"
+    ],
+    "servings": 4,
+    "difficulty": 1,
+    "status": 1,
+    "createBy": 1,
+    "instructions": [
+      {
+        "step": 1,
+        "description": "Make caramel: Heat sugar and water until golden brown, then pour into molds."
+      },
+      {
+        "step": 2,
+        "description": "Mix condensed milk with fresh milk and stir well."
+      },
+      {
+        "step": 3,
+        "description": "Beat eggs gently without foam and add to the milk mixture."
+      },
+      {
+        "step": 4,
+        "description": "Strain the mixture through a sieve and add vanilla."
+      },
+      {
+        "step": 5,
+        "description": "Pour into the caramel molds and steam for 30–40 minutes."
+      },
+      {
+        "step": 6,
+        "description": "Let cool, then refrigerate before serving."
+      }
+    ],
+    "nutrition": {
+      "calories": 250,
+      "fat": 10,
+      "carbohydrates": 30,
+      "protein": 6
+    },
+    "ratings": [
+      {
+        "userId": 3,
+        "rating": 5
+      },
+      {
+        "userId": 4,
+        "rating": 4
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "userId": 3,
+        "comment": "Easy-to-follow recipe, the flan turns out smooth and tasty!",
+        "replyTo": null
+      },
+      {
+        "id": 2,
+        "userId": 4,
+        "comment": "Can I use a rice cooker to steam it?",
+        "replyTo": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Fried Rice",
+    "description": "A quick and easy dish made with leftover rice and vegetables.",
+    "image": null,
+    "ingredients": [
+      {
+        "name": "Cooked rice",
+        "quantity": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "Eggs",
+        "quantity": 2,
+        "unit": "pcs"
+      },
+      {
+        "name": "Carrot",
+        "quantity": 1,
+        "unit": "pc"
+      },
+      {
+        "name": "Green peas",
+        "quantity": 50,
+        "unit": "g"
+      },
+      {
+        "name": "Onion",
+        "quantity": 0.5,
+        "unit": "pc"
+      },
+      {
+        "name": "Soy sauce",
+        "quantity": 2,
+        "unit": "tbsp"
+      },
+      {
+        "name": "Salt",
+        "quantity": 1,
+        "unit": "tsp"
+      },
+      {
+        "name": "Pepper",
+        "quantity": 0.5,
+        "unit": "tsp"
+      },
+      {
+        "name": "Cooking oil",
+        "quantity": 2,
+        "unit": "tbsp"
+      }
+    ],
+    "cookingTime": 20,
+    "categories": [
+      "Lunch",
+      "Quick Meal"
+    ],
+    "servings": 2,
+    "difficulty": 2,
+    "status": 1,
+    "createBy": 1,
+    "instructions": [
+      {
+        "step": 1,
+        "description": "Chop all vegetables and beat the eggs."
+      },
+      {
+        "step": 2,
+        "description": "Heat oil, sauté onion, carrot, and peas until soft."
+      },
+      {
+        "step": 3,
+        "description": "Push veggies to the side and scramble eggs in the same pan."
+      },
+      {
+        "step": 4,
+        "description": "Add rice, soy sauce, salt, and pepper. Stir-fry evenly."
+      },
+      {
+        "step": 5,
+        "description": "Cook for 2–3 more minutes, then serve hot."
+      }
+    ],
+    "nutrition": {
+      "calories": 400,
+      "fat": 12,
+      "carbohydrates": 55,
+      "protein": 10
+    },
+    "ratings": [
+      {
+        "userId": 5,
+        "rating": 5
+      },
+      {
+        "userId": 6,
+        "rating": 4
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "userId": 5,
+        "comment": "Perfect for a quick lunch!",
+        "replyTo": null
+      },
+      {
+        "id": 2,
+        "userId": 6,
+        "comment": "I added shrimp and it was even better.",
+        "replyTo": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Vietnamese Spring Rolls",
+    "description": "Fresh rolls with shrimp, vegetables, and rice noodles wrapped in rice paper.",
+    "image": null,
+    "ingredients": [
+      {
+        "name": "Rice paper",
+        "quantity": 8,
+        "unit": "sheets"
+      },
+      {
+        "name": "Shrimp",
+        "quantity": 200,
+        "unit": "g"
+      },
+      {
+        "name": "Rice noodles",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "name": "Lettuce",
+        "quantity": 4,
+        "unit": "leaves"
+      },
+      {
+        "name": "Mint",
+        "quantity": 1,
+        "unit": "handful"
+      },
+      {
+        "name": "Cucumber",
+        "quantity": 0.5,
+        "unit": "pc"
+      }
+    ],
+    "cookingTime": 20,
+    "categories": [
+      "Appetizer",
+      "Healthy"
+    ],
+    "servings": 4,
+    "difficulty": 4,
+    "status": 1,
+    "createBy": 2,
+    "instructions": [
+      {
+        "step": 1,
+        "description": "Boil and peel shrimp, cut in half lengthwise."
+      },
+      {
+        "step": 2,
+        "description": "Soften rice noodles and slice cucumber thinly."
+      },
+      {
+        "step": 3,
+        "description": "Dip rice paper in water to soften."
+      },
+      {
+        "step": 4,
+        "description": "Place vegetables, noodles, and shrimp on rice paper."
+      },
+      {
+        "step": 5,
+        "description": "Roll tightly and serve with dipping sauce."
+      }
+    ],
+    "nutrition": {
+      "calories": 180,
+      "fat": 3,
+      "carbohydrates": 30,
+      "protein": 12
+    },
+    "ratings": [
+      {
+        "userId": 7,
+        "rating": 5
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "userId": 7,
+        "comment": "Very fresh and easy to make!",
+        "replyTo": null
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Pho Bo",
+    "description": "Vietnamese beef noodle soup with aromatic broth and rice noodles.",
+    "image": null,
+    "ingredients": [
+      {
+        "name": "Beef bones",
+        "quantity": 1,
+        "unit": "kg"
+      },
+      {
+        "name": "Beef brisket",
+        "quantity": 500,
+        "unit": "g"
+      },
+      {
+        "name": "Rice noodles",
+        "quantity": 400,
+        "unit": "g"
+      },
+      {
+        "name": "Ginger",
+        "quantity": 1,
+        "unit": "piece"
+      },
+      {
+        "name": "Onion",
+        "quantity": 1,
+        "unit": "pc"
+      },
+      {
+        "name": "Spices (cinnamon, star anise)",
+        "quantity": 1,
+        "unit": "set"
+      },
+      {
+        "name": "Fish sauce",
+        "quantity": 2,
+        "unit": "tbsp"
+      },
+      {
+        "name": "Fresh herbs",
+        "quantity": 1,
+        "unit": "bunch"
+      }
+    ],
+    "cookingTime": 240,
+    "categories": [
+      "Soup",
+      "Traditional"
+    ],
+    "servings": 4,
+    "difficulty": 5,
+    "status": 1,
+    "createBy": 3,
+    "instructions": [
+      {
+        "step": 1,
+        "description": "Boil and clean beef bones, then simmer with onion and ginger."
+      },
+      {
+        "step": 2,
+        "description": "Add spices and simmer for 3–4 hours."
+      },
+      {
+        "step": 3,
+        "description": "Cook noodles and slice beef brisket."
+      },
+      {
+        "step": 4,
+        "description": "Assemble in bowls: noodles, beef, herbs."
+      },
+      {
+        "step": 5,
+        "description": "Pour hot broth and serve with lime and chili."
+      }
+    ],
+    "nutrition": {
+      "calories": 500,
+      "fat": 15,
+      "carbohydrates": 50,
+      "protein": 35
+    },
+    "ratings": [
+      {
+        "userId": 8,
+        "rating": 5
+      },
+      {
+        "userId": 9,
+        "rating": 5
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "userId": 8,
+        "comment": "Best homemade pho I've tried!",
+        "replyTo": null
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Grilled Pork with Broken Rice",
+    "description": "Popular Vietnamese dish served with grilled pork chops, broken rice, and fish sauce.",
+    "image": null,
+    "ingredients": [
+      {
+        "name": "Pork chops",
+        "quantity": 500,
+        "unit": "g"
+      },
+      {
+        "name": "Broken rice",
+        "quantity": 2,
+        "unit": "cups"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 3,
+        "unit": "cloves"
+      },
+      {
+        "name": "Shallots",
+        "quantity": 2,
+        "unit": "pcs"
+      },
+      {
+        "name": "Fish sauce",
+        "quantity": 3,
+        "unit": "tbsp"
+      },
+      {
+        "name": "Sugar",
+        "quantity": 1,
+        "unit": "tbsp"
+      },
+      {
+        "name": "Cucumber",
+        "quantity": 1,
+        "unit": "pc"
+      },
+      {
+        "name": "Pickled carrots",
+        "quantity": 100,
+        "unit": "g"
+      }
+    ],
+    "cookingTime": 45,
+    "categories": [
+      "Lunch",
+      "Grill"
+    ],
+    "servings": 2,
+    "difficulty": 3,
+    "status": 1,
+    "createBy": 2,
+    "instructions": [
+      {
+        "step": 1,
+        "description": "Marinate pork with fish sauce, garlic, shallots, and sugar."
+      },
+      {
+        "step": 2,
+        "description": "Grill pork until fully cooked and slightly charred."
+      },
+      {
+        "step": 3,
+        "description": "Cook broken rice and prepare fresh veggies."
+      },
+      {
+        "step": 4,
+        "description": "Serve pork over rice with pickles and dipping sauce."
+      }
+    ],
+    "nutrition": {
+      "calories": 650,
+      "fat": 25,
+      "carbohydrates": 60,
+      "protein": 40
+    },
+    "ratings": [
+      {
+        "userId": 10,
+        "rating": 5
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "userId": 10,
+        "comment": "Love the flavor of the grilled pork!",
+        "replyTo": null
+      }
+    ]
+  }
+]

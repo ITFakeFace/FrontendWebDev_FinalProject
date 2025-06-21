@@ -6,7 +6,7 @@ const SESSION_KEY = 'loggedUser';
 
 function initUsers() {
   const existing = localStorage.getItem(STORAGE_KEY);
-  if (!existing) {
+  if (existing) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(mockUsers));
   }
 }
@@ -65,11 +65,16 @@ export function loginUser({ username, password }) {
 
 export function registerUser({ username, email, password }) {
   const users = loadUsers();
+
   if (users.find((u) => u.username === username || u.email === email)) {
     throw new Error("Username or email already exists");
   }
 
+  // Tìm id lớn nhất trong danh sách user hiện tại
+  const maxId = users.length > 0 ? Math.max(...users.map(u => u.id || 0)) : 0;
+
   const newUser = {
+    id: maxId + 1, // ID tự tăng
     username,
     email,
     password,

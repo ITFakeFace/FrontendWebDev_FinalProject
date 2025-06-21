@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "username": "User1",
     "email": "user1@example.com",
     "password": "123456",
@@ -10,6 +11,7 @@
     "favorite": []
   },
   {
+    "id": 2,
     "username": "User2",
     "email": "user2@example.com",
     "password": "123456",
@@ -20,6 +22,7 @@
     "favorite": []
   },
   {
+    "id": 3,
     "username": "User3",
     "email": "user3@example.com",
     "password": "123456",

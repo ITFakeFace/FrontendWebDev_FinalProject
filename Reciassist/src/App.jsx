@@ -26,10 +26,12 @@ function App() {
     <Routes>
       <Route path='/' element={<MainLayout />}>
         <Route path="" element={<Dashboard />} />
+        <Route path="recipe" element={<RecipeFormPage />} />
         <Route path="recipe/:id" element={<RecipeFormPage />} />
       </Route>
 
       <Route path="/sign-in" element={<LoginPage />} />
+      <Route path="/sign-up" element={<LoginPage />} />
 
     </Routes>
   )
