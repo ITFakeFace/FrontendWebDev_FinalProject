@@ -1,0 +1,33 @@
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.card .p-fieldset {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.75rem;
+  background-color: #ffffff;
+  color: #4b5563
+}
+
+.card .p-fieldset .p-fieldset-legend {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  background: #f9fafb;
+  font-weight: 700;
+  border-radius: 6px; /* border-gray-300 */
+}
+
+.card .p-fieldset .p-fieldset-content {
+  padding: 0.75rem;
+}
+
+.card .p-fieldset .p-fieldset-content p {
+  font-size: 0.875rem;
+  color: #334155;
+  display: flex;
+  align-items: center;
+}

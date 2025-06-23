@@ -4,6 +4,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
+import RecipeList from './pages/RecipeList'
+import RecipeDetail from './pages/RecipeDetails'
 
 function Dashboard() {
   return (
@@ -19,7 +21,9 @@ function App() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<RecipeList />} />
+        <Route path="/recipe/:slug" element={<RecipeDetail />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
     </Routes>
   )
