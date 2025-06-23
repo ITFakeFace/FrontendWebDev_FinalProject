@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "Flan Cake",
+    "name": "Flan Cake",
     "description": "A soft and creamy dessert with a rich caramel topping.",
     "image": null,
     "ingredients": [
@@ -104,7 +104,7 @@
   },
   {
     "id": 2,
-    "title": "Fried Rice",
+    "name": "Fried Rice",
     "description": "A quick and easy dish made with leftover rice and vegetables.",
     "image": null,
     "ingredients": [
@@ -218,7 +218,7 @@
   },
   {
     "id": 3,
-    "title": "Vietnamese Spring Rolls",
+    "name": "Vietnamese Spring Rolls",
     "description": "Fresh rolls with shrimp, vegetables, and rice noodles wrapped in rice paper.",
     "image": null,
     "ingredients": [
@@ -307,7 +307,7 @@
   },
   {
     "id": 4,
-    "title": "Pho Bo",
+    "name": "Pho Bo",
     "description": "Vietnamese beef noodle soup with aromatic broth and rice noodles.",
     "image": null,
     "ingredients": [
@@ -410,7 +410,7 @@
   },
   {
     "id": 5,
-    "title": "Grilled Pork with Broken Rice",
+    "name": "Grilled Pork with Broken Rice",
     "description": "Popular Vietnamese dish served with grilled pork chops, broken rice, and fish sauce.",
     "image": null,
     "ingredients": [

@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 function Dashboard() {
   return (
-    <div>
+    <div className='w-full'>
       <h2 className="text-xl font-semibold mb-3">📊 Dashboard</h2>
       <p>Welcome to the GitHub-like layout demo!</p>
     </div>
