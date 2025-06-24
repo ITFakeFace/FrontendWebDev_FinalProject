@@ -1,0 +1,19 @@
+/* carousel.css */
+.p-carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.p-carousel-indicator {
+  width: 32px;
+  height: 6px;
+  border-radius: 4px;
+  background-color: #d1d5db;
+  transition: background-color 0.3s ease;
+}
+
+.p-carousel-indicator.p-highlight {
+  background-color: #3b82f6;
+}

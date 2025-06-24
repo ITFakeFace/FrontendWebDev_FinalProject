@@ -1,0 +1,130 @@
+// mockData.js
+
+export const mockComments = [
+  {
+    id: 1,
+    user: {
+      name: 'Mary Murlin',
+      avatar: new URL('../assets/user/avatars/ava5.png', import.meta.url).href,
+    },
+    rating: 5,
+    date: 'April 2025',
+    comment: 'This recipe was amazing and easy to follow. I would make it again!',
+    helpful: 2,
+    tags: ['Great flavors', 'Simple prep'],
+  },
+  {
+    id: 2,
+    user: {
+      name: 'PlumMeal2222',
+      avatar: new URL('../assets/user/avatars/ava3.png', import.meta.url).href,
+    },
+    rating: 4,
+    date: 'March 2025',
+    comment: 'Pretty good, although I had to substitute some ingredients.',
+    helpful: 1,
+    tags: ['Good texture'],
+  },
+  {
+    id: 3,
+    user: {
+      name: 'FoodieFox',
+      avatar: new URL('../assets/user/avatars/ava2.png', import.meta.url).href,
+    },
+    rating: 3,
+    date: 'February 2025',
+    comment: 'It was okay, but not my favorite.',
+    helpful: 0,
+    tags: [],
+  },
+  {
+    id: 4,
+    user: {
+      name: 'ChefDaisy',
+      avatar: new URL('../assets/user/avatars/ava1.png', import.meta.url).href,
+    },
+    rating: 5,
+    date: 'January 2025',
+    comment: 'Loved the balance of flavors. Will add this to my regular meals.',
+    helpful: 3,
+    tags: ['Delicious', 'Healthy'],
+  },
+  {
+    id: 5,
+    user: {
+      name: 'TastyTiger',
+      avatar: new URL('../assets/user/avatars/ava6.png', import.meta.url).href,
+    },
+    rating: 4,
+    date: 'December 2024',
+    comment: 'Nice recipe, could use more spice though.',
+    helpful: 1,
+    tags: ['Needs spice'],
+  },
+  {
+    id: 6,
+    user: {
+      name: 'GreenFork',
+      avatar: new URL('../assets/user/avatars/ava4.png', import.meta.url).href,
+    },
+    rating: 5,
+    date: 'November 2024',
+    comment: 'Perfect for family dinners, kids loved it!',
+    helpful: 4,
+    tags: ['Family favorite'],
+  },
+];
+
+export const mockActivities = [
+  {
+    id: 4,
+    type: 'review',
+    user: mockComments[0].user,
+    target: "Amalloch’s Classic Cuban-Style Picadillo",
+    rating: mockComments[0].rating,
+    tags: mockComments[0].tags,
+    helpful: mockComments[0].helpful,
+    date: mockComments[0].date,
+  },
+  {
+    id: 5,
+    type: 'marked_helpful',
+    user: mockComments[1].user,
+    target: 'Mary Murlin’s Warm Mexican Corn Dip',
+    date: 'January 2025',
+  },
+  {
+    id: 6,
+    type: 'marked_helpful',
+    user: mockComments[2].user,
+    target: 'BEDRESTMOM’s Warm Mexican Corn Dip',
+    date: 'January 2025',
+  },
+  {
+    id: 7,
+    type: 'review',
+    user: mockComments[3].user,
+    target: 'Luna’s Lemon Garlic Chicken',
+    rating: mockComments[3].rating,
+    tags: mockComments[3].tags,
+    helpful: mockComments[3].helpful,
+    date: mockComments[3].date,
+  },
+  {
+    id: 8,
+    type: 'marked_helpful',
+    user: mockComments[4].user,
+    target: 'ChefDaisy’s Healthy Veggie Stir Fry',
+    date: 'December 2024',
+  },
+  {
+    id: 9,
+    type: 'review',
+    user: mockComments[5].user,
+    target: 'Hearty Autumn Vegetable Soup',
+    rating: mockComments[5].rating,
+    tags: mockComments[5].tags,
+    helpful: mockComments[5].helpful,
+    date: mockComments[5].date,
+  },
+];

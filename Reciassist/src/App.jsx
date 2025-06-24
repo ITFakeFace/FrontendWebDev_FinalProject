@@ -4,6 +4,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
+import ProfilePage from './ProfilePages/ProfilePage'
+import ProfileEditForm from './ProfilePages/ProfileEditForm'
 
 function Dashboard() {
   return (
@@ -20,6 +22,8 @@ function App() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/userEdit" element={<ProfileEditForm />} />
+        <Route path="/userProfile" element={<ProfilePage />} />
       </Route>
     </Routes>
   )
