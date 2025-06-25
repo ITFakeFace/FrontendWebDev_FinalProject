@@ -4,6 +4,7 @@ import { Rating } from 'primereact/rating';
 import { Card } from 'primereact/card';
 import { mockComments } from '../../data/mockData';
 import '../../assets/styles/Carousel.css';
+
 const PeopleLikeCarousel = () => {
   const itemTemplate = (comment) => (
     <Card className="shadow-md rounded-lg p-4 mx-2">
@@ -26,7 +27,7 @@ const PeopleLikeCarousel = () => {
     <Carousel className="people-like-carousel"
       value={mockComments}
       itemTemplate={itemTemplate}
-      numVisible={2}
+      numVisible={3}
       numScroll={1}
       autoplayInterval={4000}
       circular

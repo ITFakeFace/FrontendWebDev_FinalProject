@@ -57,7 +57,7 @@ const ProfilePage = () => {
   </div>
 
   {/* Main content on the right */}
-  <div className="w-full md:flex-1">
+  <div className="w-full md:w-3/4 flex-1">
     <Card title="People who likes your recipes" className="mb-5">  
       <PeopleLikeCarousel/>
       <br/>
