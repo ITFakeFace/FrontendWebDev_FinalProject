@@ -105,13 +105,15 @@
         "id": 1,
         "userId": 3,
         "comment": "Easy-to-follow recipe, the flan turns out smooth and tasty!",
-        "replyTo": null
+        "replyTo": null,
+        "timestamp": "2025-06-01T10:00:00Z"
       },
       {
         "id": 2,
         "userId": 2,
         "comment": "Can I use a rice cooker to steam it?",
-        "replyTo": 1
+        "replyTo": 1,
+        "timestamp": "2025-06-01T10:10:00Z"
       }
     ],
     "ratingScore": 3.5
@@ -235,13 +237,15 @@
         "id": 1,
         "userId": 2,
         "comment": "Perfect for a quick lunch!",
-        "replyTo": null
+        "replyTo": null,
+        "timestamp": "2025-06-01T10:00:00Z"
       },
       {
         "id": 2,
         "userId": 1,
         "comment": "I added shrimp and it was even better.",
-        "replyTo": 1
+        "replyTo": 1,
+        "timestamp": "2025-06-01T10:10:00Z"
       }
     ],
     "ratingScore": 4.5
@@ -343,7 +347,8 @@
         "id": 1,
         "userId": 3,
         "comment": "Very fresh and easy to make!",
-        "replyTo": null
+        "replyTo": null,
+        "timestamp": "2025-06-01T10:00:00Z"
       }
     ],
     "ratingScore": 5
@@ -461,7 +466,8 @@
         "id": 1,
         "userId": 1,
         "comment": "Best homemade pho I've tried!",
-        "replyTo": null
+        "replyTo": null,
+        "timestamp": "2025-06-01T10:00:00Z"
       }
     ],
     "ratingScore": 5
@@ -570,7 +576,8 @@
         "id": 1,
         "userId": 2,
         "comment": "Love the flavor of the grilled pork!",
-        "replyTo": null
+        "replyTo": null,
+        "timestamp": "2025-06-01T10:00:00Z"
       }
     ],
     "ratingScore": 5

@@ -1,10 +1,10 @@
 import {
-  blobToDataURL,
-  dataURLtoBlob,
-  getImageBlob,
-  processEditorContentAndSaveImages,
-  replaceImageSrcWithBase64,
-  saveImageBlob
+    blobToDataURL,
+    dataURLtoBlob,
+    getImageBlob,
+    processEditorContentAndSaveImages,
+    replaceImageSrcWithBase64,
+    saveImageBlob
 } from "../util/imageUtil.js";
 import mockRecipes from "./datas/recipies.json";
 
@@ -73,8 +73,13 @@ export function getAllRecipes({onlyActive = false} = {}) {
     return onlyActive ? recipes.filter(r => r.status === 1) : recipes;
 }
 
-export function getRecipeById(id) {
+export function getRawRecipeById(id) {
     return loadRecipes().find(r => r.id == id);
+}
+
+export async function getFormattedRecipeId(id) {
+    var res = loadRecipes().find(r => r.id == id);
+    return await fetchFromData(res);
 }
 
 export function createRecipe(recipeData) {

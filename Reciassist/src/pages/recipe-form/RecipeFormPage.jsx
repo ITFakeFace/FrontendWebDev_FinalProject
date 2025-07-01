@@ -18,7 +18,7 @@ import {InstructionsEditor} from "./InstructionEditor.jsx";
 import {MultiSelect} from "primereact/multiselect";
 import {useToast} from "../../context/ToastStore.js";
 import {classNames} from "primereact/utils";
-import {createRecipe, fetchFromData, getRecipeById, updateRecipe} from "../../services/recipeService.js";
+import {createRecipe, getFormattedRecipeId, updateRecipe} from "../../services/recipeService.js";
 
 let temp = 0;
 const RecipeFormPage = () => {
@@ -248,19 +248,12 @@ const RecipeFormPage = () => {
 
     const loadRecipe = async (id) => {
         // 1. Lấy từ localStorage
-        const rawRecipe = getRecipeById(id);
+        const rawRecipe = await getFormattedRecipeId(id);
         if (!rawRecipe) {
             console.warn("❌ Không tìm thấy recipe id:", id);
             return;
         }
-        console.log(`RawRecipe ${temp++}:`, rawRecipe);
-
-        // 2. Chuyển image://id → base64 để hiển thị
-        const hydratedRecipe = await fetchFromData(rawRecipe);
-
-        // 3. Gán vào state
-        setRecipe(hydratedRecipe);
-        console.log(`AfterRecipe ${temp++}:`, hydratedRecipe);
+        setRecipe(rawRecipe);
     };
 
 
