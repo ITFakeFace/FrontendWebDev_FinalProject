@@ -20,6 +20,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@tailwindcss/vite": "^4.1.11",
     "boxicons": "^2.1.4",
+    "chart.js": "^4.5.0",
     "classnames": "^2.5.1",
     "fullcalendar": "^6.1.17",
     "idb": "^8.0.3",
