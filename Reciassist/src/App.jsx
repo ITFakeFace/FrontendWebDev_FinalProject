@@ -9,6 +9,8 @@ import {TestEditor} from './pages/test/TestEditor';
 import {bootstrapRecipes} from "./services/recipeService.js";
 import ProfilePage from './ProfilePages/ProfilePage'
 import ProfileEditForm from './ProfilePages/ProfileEditForm'
+import RecipeList from './pages/RecipeList'
+import RecipeDetail from './pages/RecipeDetails'
 
 function Dashboard() {
     return (
@@ -35,6 +37,8 @@ function App() {
                 <Route path="recipe/:id" element={<RecipeFormPage/>}/>
         <Route path="/userEdit" element={<ProfileEditForm />} />
         <Route path="/userProfile" element={<ProfilePage />} />
+        <Route path="/recipe/:slug" element={<RecipeDetail />} />
+        <Route path="/dashboard" element={<Dashboard />} />
             </Route>
 
             <Route path="/sign-in" element={<LoginPage/>}/>

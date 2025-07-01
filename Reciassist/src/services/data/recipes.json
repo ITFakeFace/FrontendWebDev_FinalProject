@@ -1,0 +1,164 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Bolognese",
+    "description": "Classic Italian pasta dish",
+    "ingredients": ["spaghetti", "ground beef", "tomato sauce"],
+    "instructions": "Cook pasta, prepare sauce, combine.",
+    "cookingTime": 45,
+    "servings": 4,
+    "category": "Dinner",
+    "rating": 4.5,
+    "level": "Medium",
+    "image_path": "/assets/food/images/spaghetti-bolognese.jpg",
+    "nutritionalInfo": {
+      "calories": 600,
+      "protein": 25,
+      "fat": 15,
+      "carbs": 80
+    },
+    "comments": [
+      {
+        "username": "User1",
+        "text": "Delicious!",
+        "timestamp": "2025-06-01T10:00:00Z",
+        "rating": 5
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Chicken Curry",
+    "description": "Spicy and flavorful chicken curry",
+    "ingredients": ["chicken", "curry powder", "coconut milk"],
+    "instructions": "Cook chicken, add spices, simmer with coconut milk.",
+    "cookingTime": 60,
+    "servings": 4,
+    "category": "Dinner",
+    "rating": 4.7,
+    "level": "Medium",
+    "image_path": "/assets/food/images/chicken-curry.jpg",
+    "nutritionalInfo": {
+      "calories": 700,
+      "protein": 30,
+      "fat": 25,
+      "carbs": 50
+    },
+    "comments": [
+      {
+        "username": "User2",
+        "text": "Very tasty!",
+        "timestamp": "2025-06-02T11:00:00Z",
+        "rating": 4.5
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Vegetable Stir Fry",
+    "description": "Quick and healthy vegetable stir fry",
+    "ingredients": ["mixed vegetables", "soy sauce", "ginger"],
+    "instructions": "Stir fry vegetables, add soy sauce and ginger.",
+    "cookingTime": 30,
+    "servings": 2,
+    "category": "Lunch",
+    "rating": 4.0,
+    "level": "Easy",
+    "image_path": "/assets/food/images/vegetable-stir-fry.png",
+    "nutritionalInfo": {
+      "calories": 300,
+      "protein": 10,
+      "fat": 5,
+      "carbs": 50
+    },
+    "comments": [
+      {
+        "username": "User3",
+        "text": "Healthy and quick!",
+        "timestamp": "2025-06-03T12:00:00Z",
+        "rating": 4
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Chocolate Cake",
+    "description": "Rich and moist chocolate cake",
+    "ingredients": ["flour", "cocoa powder", "sugar", "eggs"],
+    "instructions": "Mix ingredients, bake, and cool.",
+    "cookingTime": 90,
+    "servings": 8,
+    "category": "Dessert",
+    "rating": 4.8,
+    "level": "Medium",
+    "image_path": "/assets/food/images/chocolate-cake.jpg",
+    "nutritionalInfo": {
+      "calories": 400,
+      "protein": 6,
+      "fat": 20,
+      "carbs": 50
+    },
+    "comments": [
+      {
+        "username": "User5",
+        "text": "Best cake ever!",
+        "timestamp": "2025-06-05T14:00:00Z",
+        "rating": 5
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Grilled Salmon",
+    "description": "Healthy grilled salmon with herbs",
+    "ingredients": ["salmon fillet", "olive oil", "lemon", "herbs"],
+    "instructions": "Marinate salmon, grill until cooked.",
+    "cookingTime": 25,
+    "servings": 2,
+    "category": "Dinner",
+    "rating": 4.6,
+    "level": "Easy",
+    "image_path": "/assets/food/images/grilled-salmon.jpg",
+    "nutritionalInfo": {
+      "calories": 350,
+      "protein": 30,
+      "fat": 20,
+      "carbs": 5
+    },
+    "comments": [
+      {
+        "username": "User6",
+        "text": "Perfectly cooked!",
+        "timestamp": "2025-06-06T15:00:00Z",
+        "rating": 4.5
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Beef Tacos",
+    "description": "Spicy beef tacos with toppings",
+    "ingredients": ["ground beef", "taco shells", "lettuce", "cheese"],
+    "instructions": "Cook beef, assemble tacos with toppings.",
+    "cookingTime": 30,
+    "servings": 4,
+    "category": "Dinner",
+    "rating": 4.4,
+    "level": "Medium",
+    "image_path": "/assets/food/images/beef-tacos.jpg",
+    "nutritionalInfo": {
+      "calories": 500,
+      "protein": 20,
+      "fat": 25,
+      "carbs": 40
+    },
+    "comments": [
+      {
+        "username": "User8",
+        "text": "Loved the spice!",
+        "timestamp": "2025-06-08T17:00:00Z",
+        "rating": 4.5
+      }
+    ]
+  }
+]
