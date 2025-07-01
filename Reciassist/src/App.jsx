@@ -1,40 +1,44 @@
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import {Route, Routes} from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import LoginPage from './pages/authentication/LoginPage'
 import RecipeFormPage from './pages/recipe-form/RecipeFormPage';
-import { useUserStore } from './context/AuthContext';
-import { useEffect } from 'react';
+import {useUserStore} from './context/AuthContext';
+import {useEffect} from 'react';
+import {TestEditor} from './pages/test/TestEditor';
+import {bootstrapRecipes} from "./services/recipeService.js";
 
 function Dashboard() {
-  return (
-    <div className='w-full'>
-      <h2 className="text-xl font-semibold mb-3">📊 Dashboard</h2>
-      <p>Welcome to the GitHub-like layout demo!</p>
-    </div>
-  );
+    return (
+        <div className='w-full'>
+            <h2 className="text-xl font-semibold mb-3">📊 Dashboard</h2>
+            <p>Welcome to the GitHub-like layout demo!</p>
+        </div>
+    );
 }
 
 function App() {
-  const { bootstrap } = useUserStore();
+    const {bootstrap} = useUserStore();
 
-  useEffect(() => {
-    bootstrap();
-  }, []);
+    useEffect(() => {
+        bootstrap();
+        bootstrapRecipes();
+    }, []);
 
-  return (
-    <Routes>
-      <Route path='/' element={<MainLayout />}>
-        <Route path="" element={<Dashboard />} />
-        <Route path="recipe" element={<RecipeFormPage />} />
-        <Route path="recipe/:id" element={<RecipeFormPage />} />
-      </Route>
+    return (
+        <Routes>
+            <Route path='/' element={<MainLayout/>}>
+                <Route path="" element={<Dashboard/>}/>
+                <Route path="recipe" element={<RecipeFormPage/>}/>
+                <Route path="recipe/:id" element={<RecipeFormPage/>}/>
+            </Route>
 
-      <Route path="/sign-in" element={<LoginPage />} />
-      <Route path="/sign-up" element={<LoginPage />} />
+            <Route path="/sign-in" element={<LoginPage/>}/>
+            <Route path="/sign-up" element={<LoginPage/>}/>
 
-    </Routes>
-  )
+            <Route path="/test/editor/:content" element={<TestEditor/>}/>
+        </Routes>
+    )
 }
 
 export default App
