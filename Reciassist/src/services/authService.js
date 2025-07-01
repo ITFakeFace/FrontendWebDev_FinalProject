@@ -6,7 +6,7 @@ const SESSION_KEY = 'loggedUser';
 
 function initUsers() {
     const existing = localStorage.getItem(STORAGE_KEY);
-    if (existing) {
+    if (existing == null) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(mockUsers));
     }
 }

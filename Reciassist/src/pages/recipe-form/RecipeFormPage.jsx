@@ -253,7 +253,11 @@ const RecipeFormPage = () => {
             console.warn("❌ Không tìm thấy recipe id:", id);
             return;
         }
-        setRecipe(rawRecipe);
+        const hydratedRecipe = {
+            ...rawRecipe,
+            cookingTime: rawRecipe.cookingTime ? new Date(rawRecipe.cookingTime) : null,
+        };
+        setRecipe(hydratedRecipe);
     };
 
 

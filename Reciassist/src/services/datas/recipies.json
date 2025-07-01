@@ -43,7 +43,7 @@
         "unit": "tube"
       }
     ],
-    "cookingTime": 60,
+    "cookingTime": "2025-07-01T12:01:25.284Z",
     "categories": [
       "Dessert",
       "Cake"
@@ -180,7 +180,7 @@
         "unit": "tbsp"
       }
     ],
-    "cookingTime": 20,
+    "cookingTime": "2025-07-01T12:01:25.284Z",
     "categories": [
       "Lunch",
       "Fried"
@@ -294,7 +294,7 @@
         "unit": "pc"
       }
     ],
-    "cookingTime": 20,
+    "cookingTime": "2025-07-01T12:01:25.284Z",
     "categories": [
       "Appetizer",
       "Healthy"
@@ -409,7 +409,7 @@
         "unit": "bunch"
       }
     ],
-    "cookingTime": 240,
+    "cookingTime": "2025-07-01T12:01:25.284Z",
     "categories": [
       "Soup",
       "Traditional"
@@ -528,7 +528,7 @@
         "unit": "g"
       }
     ],
-    "cookingTime": 45,
+    "cookingTime": "2025-07-01T12:01:25.284Z",
     "categories": [
       "Lunch",
       "Grill"
