@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom"
 const SideBarItemClick = ({ icon, label, onClick }) => {
   const navigate = useNavigate();
   return (
-    <div>
-      <Button className="w-full flex flex-row" onClick={onClick()}>
-        <span className="text-xl">{icon}</span>
-        <span className="ml-5">{label}</span>
+    <div className="w-full">
+      <Button
+        onClick={onClick}
+        className="pt-unstyled w-full flex items-center gap-4 px-4 py-2 rounded-lg transition-all"
+      >
+        <span className="text-xl text-gray-900 dark:text-gray-300">{icon}</span>
+        <span className="text-base font-medium text-gray-900 dark:text-gray-300">{label}</span>
       </Button>
     </div>
   );
