@@ -1,86 +1,174 @@
+import {
+  blobToDataURL,
+  dataURLtoBlob,
+  getImageBlob,
+  processEditorContentAndSaveImages,
+  replaceImageSrcWithBase64,
+  saveImageBlob
+} from "../util/imageUtil.js";
+import mockRecipes from "./datas/recipies.json";
+
 const STORAGE_KEY = 'mockRecipes';
 
-// Lấy danh sách từ localStorage
 function loadRecipes() {
-  return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 }
 
-// Lưu danh sách vào localStorage
 function saveRecipes(recipes) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes));
 }
 
-// Khởi tạo nếu chưa có
-export function bootstrapRecipes(mockRecipes = []) {
-  const existing = localStorage.getItem(STORAGE_KEY);
-  if (!existing) {
-    const initialized = mockRecipes.map((r, i) => ({
-      ...r,
-      id: i + 1,
-      status: 1, // active mặc định
-    }));
+export async function bootstrapRecipes() {
+    const existing = localStorage.getItem(STORAGE_KEY);
+    if (existing) return;
+
+    const initialized = await Promise.all(
+        mockRecipes.map(async (r, i) => {
+            let image = r.image;
+
+            if (
+                typeof image === 'string' &&
+                !image.startsWith('data:') &&
+                !image.startsWith('image://')
+            ) {
+                try {
+                    const response = await fetch(image);
+                    const blob = await response.blob();
+
+                    const id = crypto.randomUUID();
+                    await saveImageBlob(id, blob);
+
+                    image = `image://${id}`;
+                } catch (error) {
+                    console.error(`❌ Không thể fetch ảnh ${image}:`, error);
+                }
+            }
+
+            // Process description & instruction
+            const description = await processEditorContentAndSaveImages(r.description || "");
+
+            const instructions = await Promise.all(
+                (r.instructions || []).map(async (ins) => ({
+                    ...ins,
+                    description: await processEditorContentAndSaveImages(ins.description || "")
+                }))
+            );
+
+            return {
+                ...r,
+                id: i + 1,
+                image,
+                description,
+                instructions,
+                status: 1,
+            };
+        })
+    );
+
     saveRecipes(initialized);
-  }
 }
 
-// Lấy tất cả (optionally filter active)
-export function getAllRecipes({ onlyActive = false } = {}) {
-  const recipes = loadRecipes();
-  return onlyActive ? recipes.filter(r => r.status === 1) : recipes;
+export function getAllRecipes({onlyActive = false} = {}) {
+    const recipes = loadRecipes();
+    return onlyActive ? recipes.filter(r => r.status === 1) : recipes;
 }
 
-// Lấy 1 recipe theo id
 export function getRecipeById(id) {
-  return loadRecipes().find(r => r.id === id);
+    return loadRecipes().find(r => r.id == id);
 }
 
-// Tạo mới
-export function createRecipe(recipeData, createdByUserId) {
-  const recipes = loadRecipes();
-  const newId = recipes.length > 0 ? Math.max(...recipes.map(r => r.id)) + 1 : 1;
+export function createRecipe(recipeData) {
+    const recipes = loadRecipes();
+    const newId = recipes.length > 0 ? Math.max(...recipes.map(r => r.id)) + 1 : 1;
 
-  const newRecipe = {
-    ...recipeData,
-    id: newId,
-    status: 1,
-    createdBy: createdByUserId, // thêm user id ở đây
-  };
+    const newRecipe = {
+        ...recipeData,
+        id: newId,
+        status: 1,
+    };
 
-  recipes.push(newRecipe);
-  saveRecipes(recipes);
-  return newRecipe;
+    recipes.push(newRecipe);
+    saveRecipes(recipes);
+    return newRecipe;
 }
 
-
-// Cập nhật
 export function updateRecipe(id, updatedData) {
-  const recipes = loadRecipes();
-  const index = recipes.findIndex(r => r.id === id);
-  if (index === -1) throw new Error('Recipe not found');
+    const recipes = loadRecipes();
+    const index = recipes.findIndex(r => r.id == id);
+    if (index === -1) throw new Error('Recipe not found');
 
-  recipes[index] = {
-    ...recipes[index],
-    ...updatedData,
-  };
+    recipes[index] = {
+        ...recipes[index],
+        ...updatedData,
+    };
 
-  saveRecipes(recipes);
-  return recipes[index];
+    saveRecipes(recipes);
+    return recipes[index];
 }
 
-// Xoá hoàn toàn (delete vĩnh viễn)
 export function deleteRecipe(id) {
-  let recipes = loadRecipes();
-  recipes = recipes.filter(r => r.id !== id);
-  saveRecipes(recipes);
+    let recipes = loadRecipes();
+    recipes = recipes.filter(r => r.id !== id);
+    saveRecipes(recipes);
 }
 
-// Disable recipe (chuyển status về 0)
 export function disableRecipe(id) {
-  const recipes = loadRecipes();
-  const index = recipes.findIndex(r => r.id === id);
-  if (index === -1) throw new Error('Recipe not found');
+    const recipes = loadRecipes();
+    const index = recipes.findIndex(r => r.id === id);
+    if (index === -1) throw new Error('Recipe not found');
 
-  recipes[index].status = 0;
-  saveRecipes(recipes);
-  return recipes[index];
+    recipes[index].status = 0;
+    saveRecipes(recipes);
+    return recipes[index];
+}
+
+/**
+ * ✅ Giai đoạn lưu trữ (convert base64 → image://id)
+ */
+export async function fetchToData(recipe) {
+    const clone = structuredClone(recipe);
+
+    if (clone.image?.startsWith("data:image")) {
+        const blob = dataURLtoBlob(clone.image);
+        const id = crypto.randomUUID();
+        await saveImageBlob(id, blob);
+        clone.image = `image://${id}`;
+    }
+
+    clone.description = await processEditorContentAndSaveImages(clone.description || "");
+
+    clone.instructions = await Promise.all(
+        (clone.instructions || []).map(async (ins) => ({
+            ...ins,
+            description: await processEditorContentAndSaveImages(ins.description || "")
+        }))
+    );
+
+    return clone;
+}
+
+/**
+ * ✅ Giai đoạn render (convert image://id → base64)
+ */
+export async function fetchFromData(recipe) {
+    const clone = structuredClone(recipe);
+
+    if (clone.image?.startsWith("image://")) {
+        const id = clone.image.replace("image://", "");
+        const blob = await getImageBlob(id);
+        if (blob) {
+            clone.image = await blobToDataURL(blob); // ✅ hoặc dùng URL.createObjectURL(blob)
+        }
+    }
+
+    clone.description = await replaceImageSrcWithBase64(clone.description || "");
+
+    clone.instructions = await Promise.all(
+        (clone.instructions || []).map(async (ins) => ({
+            ...ins,
+            description: await replaceImageSrcWithBase64(ins.description || "")
+        }))
+    );
+
+    return clone;
 }

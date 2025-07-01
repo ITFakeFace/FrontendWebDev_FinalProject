@@ -2,35 +2,42 @@
   {
     "id": 1,
     "name": "Flan Cake",
-    "description": "A soft and creamy dessert with a rich caramel topping.",
+    "description": "<p>A soft and creamy dessert with a rich caramel topping.</p>",
     "image": null,
+    "accessTime": 0,
     "ingredients": [
       {
+        "id": 1,
         "name": "Eggs",
         "quantity": 4,
         "unit": "pcs"
       },
       {
+        "id": 2,
         "name": "Condensed milk",
         "quantity": 1,
         "unit": "can"
       },
       {
+        "id": 3,
         "name": "Fresh milk (unsweetened)",
         "quantity": 500,
         "unit": "ml"
       },
       {
+        "id": 4,
         "name": "Sugar",
         "quantity": 100,
         "unit": "g"
       },
       {
+        "id": 5,
         "name": "Water",
         "quantity": 50,
         "unit": "ml"
       },
       {
+        "id": 6,
         "name": "Vanilla",
         "quantity": 1,
         "unit": "tube"
@@ -47,28 +54,34 @@
     "createBy": 1,
     "instructions": [
       {
-        "step": 1,
-        "description": "Make caramel: Heat sugar and water until golden brown, then pour into molds."
+        "id": 1,
+        "name": null,
+        "description": "<p>Make caramel: Heat sugar and water until golden brown, then pour into molds.</p>"
       },
       {
-        "step": 2,
-        "description": "Mix condensed milk with fresh milk and stir well."
+        "id": 2,
+        "name": null,
+        "description": "<p>Mix condensed milk with fresh milk and stir well.</p>"
       },
       {
-        "step": 3,
-        "description": "Beat eggs gently without foam and add to the milk mixture."
+        "id": 3,
+        "name": null,
+        "description": "<p>Beat eggs gently without foam and add to the milk mixture.</p>"
       },
       {
-        "step": 4,
-        "description": "Strain the mixture through a sieve and add vanilla."
+        "id": 4,
+        "name": null,
+        "description": "<p>Strain the mixture through a sieve and add vanilla.</p>"
       },
       {
-        "step": 5,
-        "description": "Pour into the caramel molds and steam for 30–40 minutes."
+        "id": 5,
+        "name": null,
+        "description": "<p>Pour into the caramel molds and steam for 30–40 minutes.</p>"
       },
       {
-        "step": 6,
-        "description": "Let cool, then refrigerate before serving."
+        "id": 6,
+        "name": null,
+        "description": "<p>Let cool, then refrigerate before serving.</p>"
       }
     ],
     "nutrition": {
@@ -83,7 +96,7 @@
         "rating": 5
       },
       {
-        "userId": 4,
+        "userId": 2,
         "rating": 4
       }
     ],
@@ -96,59 +109,70 @@
       },
       {
         "id": 2,
-        "userId": 4,
+        "userId": 2,
         "comment": "Can I use a rice cooker to steam it?",
         "replyTo": 1
       }
-    ]
+    ],
+    "ratingScore": 3.5
   },
   {
     "id": 2,
     "name": "Fried Rice",
-    "description": "A quick and easy dish made with leftover rice and vegetables.",
+    "description": "<p>A quick and easy dish made with leftover rice and vegetables.</p>",
     "image": null,
+    "accessTime": 0,
     "ingredients": [
       {
+        "id": 1,
         "name": "Cooked rice",
         "quantity": 2,
         "unit": "cups"
       },
       {
+        "id": 2,
         "name": "Eggs",
         "quantity": 2,
         "unit": "pcs"
       },
       {
+        "id": 3,
         "name": "Carrot",
         "quantity": 1,
         "unit": "pc"
       },
       {
+        "id": 4,
         "name": "Green peas",
         "quantity": 50,
         "unit": "g"
       },
       {
+        "id": 5,
         "name": "Onion",
         "quantity": 0.5,
         "unit": "pc"
       },
       {
+        "id": 6,
         "name": "Soy sauce",
         "quantity": 2,
         "unit": "tbsp"
       },
       {
+        "id": 7,
         "name": "Salt",
         "quantity": 1,
         "unit": "tsp"
       },
       {
+        "id": 8,
         "name": "Pepper",
         "quantity": 0.5,
         "unit": "tsp"
       },
       {
+        "id": 9,
         "name": "Cooking oil",
         "quantity": 2,
         "unit": "tbsp"
@@ -157,7 +181,7 @@
     "cookingTime": 20,
     "categories": [
       "Lunch",
-      "Quick Meal"
+      "Fried"
     ],
     "servings": 2,
     "difficulty": 2,
@@ -165,24 +189,29 @@
     "createBy": 1,
     "instructions": [
       {
-        "step": 1,
-        "description": "Chop all vegetables and beat the eggs."
+        "id": 1,
+        "name": null,
+        "description": "<p>Chop all vegetables and beat the eggs.</p>"
       },
       {
-        "step": 2,
-        "description": "Heat oil, sauté onion, carrot, and peas until soft."
+        "id": 2,
+        "name": null,
+        "description": "<p>Heat oil, sauté onion, carrot, and peas until soft.</p>"
       },
       {
-        "step": 3,
-        "description": "Push veggies to the side and scramble eggs in the same pan."
+        "id": 3,
+        "name": null,
+        "description": "<p>Push veggies to the side and scramble eggs in the same pan.</p>"
       },
       {
-        "step": 4,
-        "description": "Add rice, soy sauce, salt, and pepper. Stir-fry evenly."
+        "id": 4,
+        "name": null,
+        "description": "<p>Add rice, soy sauce, salt, and pepper. Stir-fry evenly.</p>"
       },
       {
-        "step": 5,
-        "description": "Cook for 2–3 more minutes, then serve hot."
+        "id": 5,
+        "name": null,
+        "description": "<p>Cook for 2–3 more minutes, then serve hot.</p>"
       }
     ],
     "nutrition": {
@@ -193,61 +222,69 @@
     },
     "ratings": [
       {
-        "userId": 5,
+        "userId": 3,
         "rating": 5
       },
       {
-        "userId": 6,
+        "userId": 1,
         "rating": 4
       }
     ],
     "comments": [
       {
         "id": 1,
-        "userId": 5,
+        "userId": 2,
         "comment": "Perfect for a quick lunch!",
         "replyTo": null
       },
       {
         "id": 2,
-        "userId": 6,
+        "userId": 1,
         "comment": "I added shrimp and it was even better.",
         "replyTo": 1
       }
-    ]
+    ],
+    "ratingScore": 4.5
   },
   {
     "id": 3,
     "name": "Vietnamese Spring Rolls",
-    "description": "Fresh rolls with shrimp, vegetables, and rice noodles wrapped in rice paper.",
+    "description": "<p>Fresh rolls with shrimp, vegetables, and rice noodles wrapped in rice paper.</p>",
     "image": null,
+    "accessTime": 0,
     "ingredients": [
       {
+        "id": 1,
         "name": "Rice paper",
         "quantity": 8,
         "unit": "sheets"
       },
       {
+        "id": 2,
         "name": "Shrimp",
         "quantity": 200,
         "unit": "g"
       },
       {
+        "id": 3,
         "name": "Rice noodles",
         "quantity": 100,
         "unit": "g"
       },
       {
+        "id": 4,
         "name": "Lettuce",
         "quantity": 4,
         "unit": "leaves"
       },
       {
+        "id": 5,
         "name": "Mint",
         "quantity": 1,
         "unit": "handful"
       },
       {
+        "id": 6,
         "name": "Cucumber",
         "quantity": 0.5,
         "unit": "pc"
@@ -264,24 +301,29 @@
     "createBy": 2,
     "instructions": [
       {
-        "step": 1,
-        "description": "Boil and peel shrimp, cut in half lengthwise."
+        "id": 1,
+        "name": null,
+        "description": "<p>Boil and peel shrimp, cut in half lengthwise.</p>"
       },
       {
-        "step": 2,
-        "description": "Soften rice noodles and slice cucumber thinly."
+        "id": 2,
+        "name": null,
+        "description": "<p>Soften rice noodles and slice cucumber thinly.</p>"
       },
       {
-        "step": 3,
-        "description": "Dip rice paper in water to soften."
+        "id": 3,
+        "name": null,
+        "description": "<p>Dip rice paper in water to soften.</p>"
       },
       {
-        "step": 4,
-        "description": "Place vegetables, noodles, and shrimp on rice paper."
+        "id": 4,
+        "name": null,
+        "description": "<p>Place vegetables, noodles, and shrimp on rice paper.</p>"
       },
       {
-        "step": 5,
-        "description": "Roll tightly and serve with dipping sauce."
+        "id": 5,
+        "name": null,
+        "description": "<p>Roll tightly and serve with dipping sauce.</p>"
       }
     ],
     "nutrition": {
@@ -292,61 +334,71 @@
     },
     "ratings": [
       {
-        "userId": 7,
+        "userId": 3,
         "rating": 5
       }
     ],
     "comments": [
       {
         "id": 1,
-        "userId": 7,
+        "userId": 3,
         "comment": "Very fresh and easy to make!",
         "replyTo": null
       }
-    ]
+    ],
+    "ratingScore": 5
   },
   {
     "id": 4,
     "name": "Pho Bo",
-    "description": "Vietnamese beef noodle soup with aromatic broth and rice noodles.",
+    "description": "<p>Vietnamese beef noodle soup with aromatic broth and rice noodles.</p>",
     "image": null,
+    "accessTime": 0,
     "ingredients": [
       {
+        "id": 1,
         "name": "Beef bones",
         "quantity": 1,
         "unit": "kg"
       },
       {
+        "id": 2,
         "name": "Beef brisket",
         "quantity": 500,
         "unit": "g"
       },
       {
+        "id": 3,
         "name": "Rice noodles",
         "quantity": 400,
         "unit": "g"
       },
       {
+        "id": 4,
         "name": "Ginger",
         "quantity": 1,
         "unit": "piece"
       },
       {
+        "id": 5,
         "name": "Onion",
         "quantity": 1,
         "unit": "pc"
       },
       {
+        "id": 6,
         "name": "Spices (cinnamon, star anise)",
         "quantity": 1,
         "unit": "set"
       },
       {
+        "id": 7,
         "name": "Fish sauce",
         "quantity": 2,
         "unit": "tbsp"
       },
       {
+        "id": 8,
         "name": "Fresh herbs",
         "quantity": 1,
         "unit": "bunch"
@@ -363,24 +415,29 @@
     "createBy": 3,
     "instructions": [
       {
-        "step": 1,
-        "description": "Boil and clean beef bones, then simmer with onion and ginger."
+        "id": 1,
+        "name": null,
+        "description": "<p>Boil and clean beef bones, then simmer with onion and ginger.</p>"
       },
       {
-        "step": 2,
-        "description": "Add spices and simmer for 3–4 hours."
+        "id": 2,
+        "name": null,
+        "description": "<p>Add spices and simmer for 3–4 hours.</p>"
       },
       {
-        "step": 3,
-        "description": "Cook noodles and slice beef brisket."
+        "id": 3,
+        "name": null,
+        "description": "<p>Cook noodles and slice beef brisket.</p>"
       },
       {
-        "step": 4,
-        "description": "Assemble in bowls: noodles, beef, herbs."
+        "id": 4,
+        "name": null,
+        "description": "<p>Assemble in bowls: noodles, beef, herbs.</p>"
       },
       {
-        "step": 5,
-        "description": "Pour hot broth and serve with lime and chili."
+        "id": 5,
+        "name": null,
+        "description": "<p>Pour hot broth and serve with lime and chili.</p>"
       }
     ],
     "nutrition": {
@@ -391,65 +448,75 @@
     },
     "ratings": [
       {
-        "userId": 8,
+        "userId": 2,
         "rating": 5
       },
       {
-        "userId": 9,
+        "userId": 3,
         "rating": 5
       }
     ],
     "comments": [
       {
         "id": 1,
-        "userId": 8,
+        "userId": 1,
         "comment": "Best homemade pho I've tried!",
         "replyTo": null
       }
-    ]
+    ],
+    "ratingScore": 5
   },
   {
     "id": 5,
     "name": "Grilled Pork with Broken Rice",
-    "description": "Popular Vietnamese dish served with grilled pork chops, broken rice, and fish sauce.",
+    "description": "<p>Popular Vietnamese dish served with grilled pork chops, broken rice, and fish sauce.</p>",
     "image": null,
+    "accessTime": 0,
     "ingredients": [
       {
+        "id": 1,
         "name": "Pork chops",
         "quantity": 500,
         "unit": "g"
       },
       {
+        "id": 2,
         "name": "Broken rice",
         "quantity": 2,
         "unit": "cups"
       },
       {
+        "id": 3,
         "name": "Garlic",
         "quantity": 3,
         "unit": "cloves"
       },
       {
+        "id": 4,
         "name": "Shallots",
         "quantity": 2,
         "unit": "pcs"
       },
       {
+        "id": 5,
         "name": "Fish sauce",
         "quantity": 3,
         "unit": "tbsp"
       },
       {
+        "id": 6,
         "name": "Sugar",
         "quantity": 1,
         "unit": "tbsp"
       },
       {
+        "id": 7,
         "name": "Cucumber",
         "quantity": 1,
         "unit": "pc"
       },
       {
+        "id": 8,
         "name": "Pickled carrots",
         "quantity": 100,
         "unit": "g"
@@ -466,20 +533,24 @@
     "createBy": 2,
     "instructions": [
       {
-        "step": 1,
-        "description": "Marinate pork with fish sauce, garlic, shallots, and sugar."
+        "id": 1,
+        "name": null,
+        "description": "<p>Marinate pork with fish sauce, garlic, shallots, and sugar.</p>"
       },
       {
-        "step": 2,
-        "description": "Grill pork until fully cooked and slightly charred."
+        "id": 2,
+        "name": null,
+        "description": "<p>Grill pork until fully cooked and slightly charred.</p>"
       },
       {
-        "step": 3,
-        "description": "Cook broken rice and prepare fresh veggies."
+        "id": 3,
+        "name": null,
+        "description": "<p>Cook broken rice and prepare fresh veggies.</p>"
       },
       {
-        "step": 4,
-        "description": "Serve pork over rice with pickles and dipping sauce."
+        "id": 4,
+        "name": null,
+        "description": "<p>Serve pork over rice with pickles and dipping sauce.</p>"
       }
     ],
     "nutrition": {
@@ -490,17 +561,18 @@
     },
     "ratings": [
       {
-        "userId": 10,
+        "userId": 3,
         "rating": 5
       }
     ],
     "comments": [
       {
         "id": 1,
-        "userId": 10,
+        "userId": 2,
         "comment": "Love the flavor of the grilled pork!",
         "replyTo": null
       }
-    ]
+    ],
+    "ratingScore": 5
   }
 ]
