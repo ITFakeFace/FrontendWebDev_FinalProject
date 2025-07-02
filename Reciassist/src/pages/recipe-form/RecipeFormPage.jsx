@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useUserStore} from "../../context/AuthContext";
 import {Panel} from "primereact/panel";
 // import { InputText } from "primereact/inputtext";
@@ -77,6 +77,7 @@ const RecipeFormPage = () => {
     const instructionsInfoPanelRef = useRef(null);
     const descriptionEditorRef = useRef(null);
     const {showToast} = useToast();
+    const navigate = useNavigate();
 
     const PANEL_TRANSITIONS = {
         toggleable: {
@@ -260,6 +261,12 @@ const RecipeFormPage = () => {
         setRecipe(hydratedRecipe);
     };
 
+    useEffect(() => {
+        if (user == null) {
+            navigate("/");
+            showToast("Please Login to use this feature", "warn")
+        }
+    }, []);
 
     useEffect(() => {
         if (id != null) {
@@ -275,7 +282,8 @@ const RecipeFormPage = () => {
                 >
                     <div className="border-2 border-gray-600 mx-6 px-5 py-3 rounded-b-2xl flex flex-col gap-y-3">
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Name:</div>
+                            <div className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Name:
+                            </div>
                             <div className="flex-grow-10 text-lg">
                                 <InputText
                                     value={recipe.name}
@@ -285,7 +293,8 @@ const RecipeFormPage = () => {
                             </div>
                         </div>
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Image:</div>
+                            <div className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Image:
+                            </div>
                             <div className="flex-grow-10 text-lg">
                                 <FileUpload
                                     mode="basic"
@@ -305,7 +314,9 @@ const RecipeFormPage = () => {
                             </div>
                         </div>
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Categories:</div>
+                            <div
+                                className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Categories:
+                            </div>
                             <div className="flex-grow-10 text-lg">
                                 <MultiSelect
                                     value={recipe.categories}
@@ -345,7 +356,9 @@ const RecipeFormPage = () => {
                             </div>
                         </div>
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Cooking Time:</div>
+                            <div className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Cooking
+                                Time:
+                            </div>
                             <div className="flex-grow-10 text-lg">
                                 <Calendar
                                     value={recipe.cookingTime}
@@ -357,7 +370,7 @@ const RecipeFormPage = () => {
                             </div>
                         </div>
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Servings
+                            <div className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Servings
                                 (People/Meal):
                             </div>
                             <div className="flex-grow-10 text-lg">
@@ -370,7 +383,9 @@ const RecipeFormPage = () => {
                             </div>
                         </div>
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Difficulty:</div>
+                            <div
+                                className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Difficulty:
+                            </div>
                             <div className="flex-grow-10 text-lg">
                                 <Rating
                                     value={recipe.difficulty}
@@ -403,7 +418,9 @@ const RecipeFormPage = () => {
                        className="w-full" pt={TailwindPanel.panel}>
                     <div className="border-2 border-gray-600 mx-6 px-5 py-3 rounded-b-2xl flex flex-col gap-y-3">
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Calories:</div>
+                            <div
+                                className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Calories:
+                            </div>
                             <div className="flex-grow-10 text-lg">
                                 <InputNumber value={recipe.nutrition.calories}
                                              onChange={(e) => onNutritionChangeProps(e.value, "calories")} min={0}
@@ -412,7 +429,9 @@ const RecipeFormPage = () => {
                             </div>
                         </div>
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Carbonhydrates:</div>
+                            <div
+                                className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Carbonhydrates:
+                            </div>
                             <div className="flex-grow-10 text-lg">
                                 <InputNumber value={recipe.nutrition.carbohydrates}
                                              onChange={(e) => onNutritionChangeProps(e.value, "carbohydrates")} min={0}
@@ -421,7 +440,7 @@ const RecipeFormPage = () => {
                             </div>
                         </div>
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Fat:</div>
+                            <div className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Fat:</div>
                             <div className="flex-grow-10 text-lg">
                                 <InputNumber value={recipe.nutrition.fat}
                                              onChange={(e) => onNutritionChangeProps(e.value, "fat")} min={0}
@@ -430,7 +449,8 @@ const RecipeFormPage = () => {
                             </div>
                         </div>
                         <div className="flex w-full items-center">
-                            <div className="w-full max-w-1/5 flex-grow-2 text-lg font-semibold">Protein:</div>
+                            <div className="w-full lg:max-w-1/5 max-w-4/15 flex-grow-2 text-lg font-semibold">Protein:
+                            </div>
                             <div className="flex-grow-10 text-lg">
                                 <InputNumber value={recipe.nutrition.protein}
                                              onChange={(e) => onNutritionChangeProps(e.value, "protein")} min={0}

@@ -42,7 +42,7 @@ const RecipeDetail = () => {
                     data: [
                         recipe.nutritions.protein,
                         recipe.nutritions.fat,
-                        recipe.nutritions.carbs
+                        recipe.nutritions.carbohydrates
                     ],
                     backgroundColor: [
                         documentStyle.getPropertyValue('--blue-500'),
