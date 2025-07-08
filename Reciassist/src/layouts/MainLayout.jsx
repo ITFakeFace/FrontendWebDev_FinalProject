@@ -7,7 +7,7 @@ import ReciassistLogoFit from '../assets/logo/Reciassist_Logo_Fit.png';
 import Anonymous from '../assets/user/avatars/Anonymous.png';
 import Ava1 from '../assets/user/avatars/ava1.png';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBowlFood, faHome, faSignIn, faSignOut, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faBowlFood, faHome, faSignIn, faSignOut, faUser, faUtensils} from "@fortawesome/free-solid-svg-icons";
 import {useUserStore} from "../context/AuthContext";
 import SideBarItemUrl from "./components/SideBarItemUrl";
 import SideBarItemClick from "./components/SideBarItemClick";
@@ -100,7 +100,8 @@ const MainLayout = () => {
             >
                 <div className="mt-10 flex flex-col gap-y-10">
                     <SideBarItemUrl icon={<FontAwesomeIcon icon={faHome}/>} label="Homepage" url="/"/>
-                    <SideBarItemUrl icon={<FontAwesomeIcon icon={faBowlFood}/>} label="Create Recipe" url="/recipe"/>
+                    <SideBarItemUrl icon={<FontAwesomeIcon icon={faBowlFood}/>} label="Recipes" url="/recipes"/>
+                    <SideBarItemUrl icon={<FontAwesomeIcon icon={faUtensils}/>} label="Meal Planner" url="/meal-planner"/>
                 </div>
             </Sidebar>
 

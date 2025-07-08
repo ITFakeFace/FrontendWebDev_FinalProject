@@ -4,11 +4,25 @@
     "title": "Spaghetti Bolognese",
     "description": "Classic Italian pasta dish",
     "ingredients": ["spaghetti", "ground beef", "tomato sauce"],
-    "instructions": "Cook pasta, prepare sauce, combine.",
+    "instructions": [
+      "Boil the spaghetti until al dente.",
+      "Cook the ground beef in a pan until browned.",
+      "Add tomato sauce and let it simmer for 10 minutes.",
+      "Mix the sauce with the spaghetti and serve hot."
+    ],
     "cookingTime": 45,
     "servings": 4,
     "category": "Dinner",
-    "rating": 4.5,
+    "ratings": [
+      {
+        "userId": 3,
+        "rating": 5
+      },
+      {
+        "userId": 2,
+        "rating": 4
+      }
+    ],
     "level": "Medium",
     "image_path": "/assets/food/images/spaghetti-bolognese.jpg",
     "nutritionalInfo": {
@@ -19,10 +33,16 @@
     },
     "comments": [
       {
+        "userId": 2,
         "username": "User1",
         "text": "Delicious!",
-        "timestamp": "2025-06-01T10:00:00Z",
-        "rating": 5
+        "timestamp": "2025-06-01T10:00:00Z"
+      },
+      {
+        "userId": 3,
+        "username": "User3",
+        "text": "Loved the sauce!",
+        "timestamp": "2025-06-01T10:30:00Z"
       }
     ]
   },
@@ -31,11 +51,25 @@
     "title": "Chicken Curry",
     "description": "Spicy and flavorful chicken curry",
     "ingredients": ["chicken", "curry powder", "coconut milk"],
-    "instructions": "Cook chicken, add spices, simmer with coconut milk.",
+    "instructions": [
+      "Heat oil in a pan and add chicken pieces.",
+      "Add curry powder and cook until fragrant.",
+      "Pour in coconut milk and simmer for 30 minutes.",
+      "Serve with rice or naan."
+    ],
     "cookingTime": 60,
     "servings": 4,
     "category": "Dinner",
-    "rating": 4.7,
+    "ratings": [
+      {
+        "userId": 3,
+        "rating": 5
+      },
+      {
+        "userId": 1,
+        "rating": 4
+      }
+    ],
     "level": "Medium",
     "image_path": "/assets/food/images/chicken-curry.jpg",
     "nutritionalInfo": {
@@ -46,10 +80,16 @@
     },
     "comments": [
       {
+        "userId": 1,
         "username": "User2",
         "text": "Very tasty!",
-        "timestamp": "2025-06-02T11:00:00Z",
-        "rating": 4.5
+        "timestamp": "2025-06-02T11:00:00Z"
+      },
+      {
+        "userId": 3,
+        "username": "User4",
+        "text": "Perfect spice level!",
+        "timestamp": "2025-06-02T11:30:00Z"
       }
     ]
   },
@@ -58,11 +98,21 @@
     "title": "Vegetable Stir Fry",
     "description": "Quick and healthy vegetable stir fry",
     "ingredients": ["mixed vegetables", "soy sauce", "ginger"],
-    "instructions": "Stir fry vegetables, add soy sauce and ginger.",
+    "instructions": [
+      "Heat oil in a wok and add mixed vegetables.",
+      "Stir fry for 5 minutes until tender.",
+      "Add soy sauce and ginger, cook for another 2 minutes.",
+      "Serve hot with rice or noodles."
+    ],
     "cookingTime": 30,
     "servings": 2,
     "category": "Lunch",
-    "rating": 4.0,
+    "ratings": [
+      {
+        "userId": 3,
+        "rating": 5
+      }
+    ],
     "level": "Easy",
     "image_path": "/assets/food/images/vegetable-stir-fry.png",
     "nutritionalInfo": {
@@ -73,10 +123,10 @@
     },
     "comments": [
       {
+        "userId": 3,
         "username": "User3",
         "text": "Healthy and quick!",
-        "timestamp": "2025-06-03T12:00:00Z",
-        "rating": 4
+        "timestamp": "2025-06-03T12:00:00Z"
       }
     ]
   },
@@ -85,11 +135,26 @@
     "title": "Chocolate Cake",
     "description": "Rich and moist chocolate cake",
     "ingredients": ["flour", "cocoa powder", "sugar", "eggs"],
-    "instructions": "Mix ingredients, bake, and cool.",
+    "instructions": [
+      "Preheat oven to 350°F (175°C).",
+      "Mix flour, cocoa powder, and sugar in a bowl.",
+      "Add eggs and mix until smooth.",
+      "Pour into a greased cake pan and bake for 30 minutes.",
+      "Let it cool before serving."
+    ],
     "cookingTime": 90,
     "servings": 8,
     "category": "Dessert",
-    "rating": 4.8,
+    "ratings": [
+      {
+        "userId": 2,
+        "rating": 5
+      },
+      {
+        "userId": 3,
+        "rating": 5
+      }
+    ],
     "level": "Medium",
     "image_path": "/assets/food/images/chocolate-cake.jpg",
     "nutritionalInfo": {
@@ -100,10 +165,16 @@
     },
     "comments": [
       {
-        "username": "User5",
+        "userId": 2,
+        "username": "User2",
         "text": "Best cake ever!",
-        "timestamp": "2025-06-05T14:00:00Z",
-        "rating": 5
+        "timestamp": "2025-06-05T14:00:00Z"
+      },
+      {
+        "userId": 3,
+        "username": "User3",
+        "text": "So rich and delicious!",
+        "timestamp": "2025-06-05T14:30:00Z"
       }
     ]
   },
@@ -112,11 +183,21 @@
     "title": "Grilled Salmon",
     "description": "Healthy grilled salmon with herbs",
     "ingredients": ["salmon fillet", "olive oil", "lemon", "herbs"],
-    "instructions": "Marinate salmon, grill until cooked.",
+    "instructions": [
+      "Preheat grill to medium-high heat.",
+      "Brush salmon with olive oil and season with herbs.",
+      "Grill for 6-8 minutes on each side until cooked through.",
+      "Serve with lemon wedges."
+    ],
     "cookingTime": 25,
     "servings": 2,
     "category": "Dinner",
-    "rating": 4.6,
+    "ratings": [
+      {
+        "userId": 3,
+        "rating": 5
+      }
+    ],
     "level": "Easy",
     "image_path": "/assets/food/images/grilled-salmon.jpg",
     "nutritionalInfo": {
@@ -127,10 +208,10 @@
     },
     "comments": [
       {
-        "username": "User6",
+        "userId": 3,
+        "username": "User3",
         "text": "Perfectly cooked!",
-        "timestamp": "2025-06-06T15:00:00Z",
-        "rating": 4.5
+        "timestamp": "2025-06-06T15:00:00Z"
       }
     ]
   },
@@ -139,11 +220,21 @@
     "title": "Beef Tacos",
     "description": "Spicy beef tacos with toppings",
     "ingredients": ["ground beef", "taco shells", "lettuce", "cheese"],
-    "instructions": "Cook beef, assemble tacos with toppings.",
+    "instructions": [
+      "Cook ground beef in a skillet until browned.",
+      "Fill taco shells with beef, lettuce, and cheese.",
+      "Add salsa or hot sauce if desired.",
+      "Serve immediately."
+    ],
     "cookingTime": 30,
     "servings": 4,
     "category": "Dinner",
-    "rating": 4.4,
+    "ratings": [
+      {
+        "userId": 2,
+        "rating": 4
+      }
+    ],
     "level": "Medium",
     "image_path": "/assets/food/images/beef-tacos.jpg",
     "nutritionalInfo": {
@@ -154,10 +245,10 @@
     },
     "comments": [
       {
-        "username": "User8",
+        "userId": 2,
+        "username": "User2",
         "text": "Loved the spice!",
-        "timestamp": "2025-06-08T17:00:00Z",
-        "rating": 4.5
+        "timestamp": "2025-06-08T17:00:00Z"
       }
     ]
   }
