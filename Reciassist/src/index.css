@@ -47,6 +47,36 @@ i {
     color: #fecaca !important;
 }
 
+.p-disabled,
+.p-component:disabled,
+.p-inputtext:disabled,
+.p-dropdown.p-disabled,
+.p-calendar.p-disabled,
+.p-button:disabled {
+    background-color: #f3f4f6 !important; /* xám nhạt */
+    border: 2px solid #d1d5db !important; /* viền xám */
+    color: #9ca3af !important; /* chữ xám nhạt */
+    border-radius: 0.5rem;
+    cursor: not-allowed !important;
+    opacity: 1 !important; /* giữ độ trong suốt để áp dụng màu custom */
+}
+
+.dark .p-disabled,
+.dark .p-component:disabled,
+.dark .p-inputtext:disabled,
+.dark .p-dropdown.p-disabled,
+.dark .p-calendar.p-disabled,
+.dark .p-button:disabled {
+    background-color: #1f2937 !important; /* xám tối */
+    border: 2px solid #374151 !important; /* viền xám đậm */
+    color: #6b7280 !important; /* chữ xám nhạt */
+}
+
+
 .p-inputgroup > p-password > .p-password.p-inputwrapper {
-    width: 100%;
+    width: 100% !important;
+}
+
+.p-icon-field.p-icon-field-right {
+    width: 100% !important;
 }

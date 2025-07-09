@@ -7,13 +7,13 @@ import {useUserStore} from './context/AuthContext';
 import {useEffect} from 'react';
 import {TestEditor} from './pages/test/TestEditor';
 import {bootstrapRecipes} from "./services/recipeService.js";
-import ProfilePage from './ProfilePages/ProfilePage'
-import ProfileEditForm from './ProfilePages/ProfileEditForm'
 import RecipeDetail from './pages/recipe-details/RecipeDetails.jsx'
 import RecipeList from './pages/recipes-list/RecipeList.jsx';
 import MealPlanner from './pages/meal-planner/MealPlanner.jsx';
 import './assets/styles/animation.css';
 import ForgotPasswordPage from "./pages/authentication/ForgotPasswordPage.jsx";
+import ProfileEditForm from "./pages/ProfilePages/ProfileEditForm.jsx";
+import ProfilePage from "./pages/ProfilePages/ProfilePage.jsx";
 
 function Dashboard() {
     return (
@@ -50,7 +50,7 @@ function App() {
             <Route path="/sign-up" element={<LoginPage/>}/>
             <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
 
-            <Route path="/test/editor/:content" element={<TestEditor/>}/>
+            <Route path="/test-recipe/:id" element={<TestEditor/>}/>
         </Routes>
     )
 }

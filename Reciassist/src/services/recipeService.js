@@ -18,6 +18,17 @@ function saveRecipes(recipes) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes));
 }
 
+const imageMap = import.meta.glob('/src/assets/**/*.{jpg,jpeg,png}', {
+    eager: true,
+    import: 'default'
+});
+
+async function fetchImageAsBlob(url) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    return await response.blob();
+}
+
 export async function bootstrapRecipes() {
     const existing = localStorage.getItem(STORAGE_KEY);
     if (existing) return;
@@ -32,19 +43,19 @@ export async function bootstrapRecipes() {
                 !image.startsWith('image://')
             ) {
                 try {
-                    const response = await fetch(image);
-                    const blob = await response.blob();
+                    const importedPath = imageMap[`/src${image}`]; // chuyển '/assets/food/...' thành '/src/assets/food/...'
 
+                    if (!importedPath) throw new Error(`Ảnh ${image} không tìm thấy trong imageMap`);
+
+                    const blob = await fetchImageAsBlob(importedPath);
                     const id = crypto.randomUUID();
                     await saveImageBlob(id, blob);
-
                     image = `image://${id}`;
                 } catch (error) {
-                    console.error(`❌ Không thể fetch ảnh ${image}:`, error);
+                    console.error(`❌ Không thể xử lý ảnh ${image}:`, error);
                 }
             }
 
-            // Process description & instruction
             const description = await processEditorContentAndSaveImages(r.description || "");
 
             const instructions = await Promise.all(
@@ -68,9 +79,21 @@ export async function bootstrapRecipes() {
     saveRecipes(initialized);
 }
 
-export function getAllRecipes({onlyActive = false} = {}) {
+
+export function getAllRawRecipes({onlyActive = false} = {}) {
     const recipes = loadRecipes();
     return onlyActive ? recipes.filter(r => r.status === 1) : recipes;
+}
+
+export async function getAllFormattedRecipes({onlyActive = false} = {}) {
+    const recipes = loadRecipes();
+    const filtered = onlyActive ? recipes.filter(r => r.status === 1) : recipes;
+
+    const result = await Promise.all(
+        filtered.map(recipe => fetchFromData(recipe))
+    );
+
+    return result;
 }
 
 export function getRawRecipeById(id) {

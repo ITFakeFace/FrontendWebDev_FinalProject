@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import './ForgotPasswordPage.scss';
 import {Steps} from "primereact/steps";
 import {Button} from "primereact/button";
@@ -7,6 +7,7 @@ import {InputOtp} from "primereact/inputotp";
 import {AnimatePresence, motion} from "framer-motion";
 import {Password} from "primereact/password";
 import {classNames} from "primereact/utils";
+import {Toast} from "primereact/toast";
 
 const ForgotPasswordPage = () => {
     let emptyResetUser = {
@@ -75,6 +76,7 @@ const ForgotPasswordPage = () => {
 
     const [resetUser, setResetUser] = useState(emptyResetUser);
     const [activeIndex, setActiveIndex] = useState(0);
+    const toast = useRef();
     const itemRenderer = (item, itemIndex) => {
         const isActiveItem = activeIndex === itemIndex;
         const backgroundColor = isActiveItem ? 'var(--gray-500)' : 'var(--surface-b)';
@@ -97,6 +99,30 @@ const ForgotPasswordPage = () => {
         }));
     }
 
+    function isValidEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    function setInvalid(elementOrRef, isInvalid = true) {
+        const el = elementOrRef?.current || elementOrRef;
+        if (!el) return;
+
+        if (isInvalid) {
+            el.classList.add('p-invalid');
+        } else {
+            el.classList.remove('p-invalid');
+        }
+    }
+
+    const Step1Click = () => {
+        if (isValidEmail(resetUser.email)) {
+            setActiveIndex(1);
+        } else {
+            setInvalid(document.querySelector("#input-email"), true);
+        }
+    }
+
     const EmailForm = () => {
         return (
             <div className="w-3/5 flex flex-col mb-5 justify-center items-center justify-self-center">
@@ -108,9 +134,11 @@ const ForgotPasswordPage = () => {
                 </div>
                 <div className="w-3/5 flex text-lg mb-10">
                     <div className="w-full p-inputgroup flex-1 border-2 border-gray-600 rounded-xl overflow-hidden">
-                        <InputText value={resetUser.email}
-                                   onChange={(e) => onResetUserChange(e.target.value, "email")}
-                                   className="pl-3 py-2" placeholder="Enter email..."/>
+                        <InputText
+                            id={'input-email'}
+                            value={resetUser.email}
+                            onChange={(e) => onResetUserChange(e.target.value, "email")}
+                            className="pl-3 py-2" placeholder="Enter email..."/>
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-envelope text-2xl"/>
                         </span>
@@ -119,7 +147,8 @@ const ForgotPasswordPage = () => {
                 <div className="w-full flex flex-row justify-end">
                     <Button
                         className="border-2 border-gray-600 rounded-xl px-5 py-2 hover:text-white hover:bg-gray-600"
-                        onClick={() => setActiveIndex(1)}
+                        onClick={Step1Click}
+                        disabled={resetUser.email == ""}
                     >
                         Go to next step
                     </Button>
@@ -172,16 +201,16 @@ const ForgotPasswordPage = () => {
         return (
             <div className="w-3/5 flex flex-col mb-5 items-center justify-self-center">
                 <div className={"w-fit flex items-center"}>
-                    <span className="w-fit text-3xl font-semibold mb-3">Authenticate Your Account</span>
+                    <span className="w-fit text-3xl font-semibold mb-3">Making New Password</span>
                 </div>
                 <div className="w-fit flex items-center">
-                    <span className="text-color-secondary block mb-5">Please enter the code sent to your email.</span>
+                    <span className="text-color-secondary block mb-5">Enter below to complete process.</span>
                 </div>
                 <div className="w-3/5 flex text-lg mb-10">
                     <div className="w-full p-inputgroup flex-1 border-2 border-gray-600 rounded-xl overflow-hidden">
                         <Password value={resetUser.password}
                                   onChange={(e) => onResetUserChange(e.target.value, "password")}
-                                  className="pl-3 py-2 " placeholder="Enter new password..."
+                                  className="pl-3 py-2 w-full" placeholder="Enter new password..."
                                   pt={PasswordTailwind.password}
                                   toggleMask={true}
                         />
@@ -191,23 +220,18 @@ const ForgotPasswordPage = () => {
                     </div>
                 </div>
                 <div className="w-3/5 flex text-lg mb-10">
-                    <Password value={resetUser.confirmPassword}
-                              onChange={(e) => onResetUserChange(e.target.value, "confirmPassword")}
-                              className="pl-3 py-2 !w-full" placeholder="Confirm new password..."
-                              pt={{
-                                  root: {
-                                      className: "w-full"
-                                  },
-                                  input: {
-                                      className: "w-full"
-                                  },
-                                  iconField: {
-                                      className: "w-full"
-                                  }
-                              }}
-                              toggleMask={true}
-                              feedback={false}
-                    />
+                    <div className="w-full p-inputgroup flex-1 border-2 border-gray-600 rounded-xl overflow-hidden">
+                        <Password value={resetUser.confirmPassword}
+                                  onChange={(e) => onResetUserChange(e.target.value, "confirmPassword")}
+                                  className="pl-3 py-2 w-full" placeholder="Confirm password..."
+                                  pt={PasswordTailwind.password}
+                                  toggleMask={true}
+                                  feedback={false}
+                        />
+                        <span className="p-inputgroup-addon">
+                            <i className="pi pi-lock text-2xl"/>
+                        </span>
+                    </div>
                 </div>
                 <div className="w-full flex flex-row justify-between">
                     <Button
@@ -258,6 +282,7 @@ const ForgotPasswordPage = () => {
 
     return (
         <div className="container">
+            <Toast ref={toast}/>
             <div className='w-full h-fit'>
                 <Steps
                     model={items}
