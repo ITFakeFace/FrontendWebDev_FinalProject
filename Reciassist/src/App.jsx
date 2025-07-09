@@ -1,4 +1,4 @@
-import './App.css'
+// import './App.css'
 import {Route, Routes} from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import LoginPage from './pages/authentication/LoginPage'
@@ -10,6 +10,7 @@ import {bootstrapRecipes} from "./services/recipeService.js";
 import ProfilePage from './pages/ProfilePages/ProfilePage'
 import ProfileEditForm from './pages/ProfilePages/ProfileEditForm'
 import RecipeDetail from './pages/RecipeDetails'
+import ForgotPasswordPage from "./pages/authentication/ForgotPasswordPage.jsx";
 
 function Dashboard() {
     return (
@@ -42,6 +43,7 @@ function App() {
 
             <Route path="/sign-in" element={<LoginPage/>}/>
             <Route path="/sign-up" element={<LoginPage/>}/>
+            <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
 
             <Route path="/test/editor/:content" element={<TestEditor/>}/>
         </Routes>
