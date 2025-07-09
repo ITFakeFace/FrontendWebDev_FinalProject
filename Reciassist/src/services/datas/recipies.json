@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Flan Cake",
     "description": "<p>A soft and creamy dessert with a rich caramel topping.</p>",
-    "image": null,
+    "image": "/assets/food/images/spaghetti-bolognese.jpg",
     "accessTime": 0,
     "ingredients": [
       {
