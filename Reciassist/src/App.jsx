@@ -7,9 +7,12 @@ import {useUserStore} from './context/AuthContext';
 import {useEffect} from 'react';
 import {TestEditor} from './pages/test/TestEditor';
 import {bootstrapRecipes} from "./services/recipeService.js";
-import ProfilePage from './pages/ProfilePages/ProfilePage'
-import ProfileEditForm from './pages/ProfilePages/ProfileEditForm'
-import RecipeDetail from './pages/RecipeDetails'
+import ProfilePage from './ProfilePages/ProfilePage'
+import ProfileEditForm from './ProfilePages/ProfileEditForm'
+import RecipeDetail from './pages/recipe-details/RecipeDetails.jsx'
+import RecipeList from './pages/recipes-list/RecipeList.jsx';
+import MealPlanner from './pages/meal-planner/MealPlanner.jsx';
+import './assets/styles/animation.css';
 import ForgotPasswordPage from "./pages/authentication/ForgotPasswordPage.jsx";
 
 function Dashboard() {
@@ -37,7 +40,9 @@ function App() {
                 <Route path="recipe/form/:id" element={<RecipeFormPage/>}/>
                 <Route path="/userEdit" element={<ProfileEditForm/>}/>
                 <Route path="/userProfile" element={<ProfilePage/>}/>
+                <Route path="/recipes" element={<RecipeList/>}/>
                 <Route path="/recipe/:slug" element={<RecipeDetail/>}/>
+                <Route path="/meal-planner" element={<MealPlanner/>}/>
                 <Route path="/dashboard" element={<Dashboard/>}/>
             </Route>
 
