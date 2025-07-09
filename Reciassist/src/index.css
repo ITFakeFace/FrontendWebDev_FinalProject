@@ -2,13 +2,12 @@
 
 /*@import "tailwindcss";*/
 @import 'primereact/resources/themes/lara-light-blue/theme.css' layer(primereact);
-
-@layer theme, base, primereact, components, utilities;
-
 @import 'primereact/resources/primereact.min.css' layer(primereact);
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
+
+@layer theme, base, primereact, components, utilities;
 
 @import 'primeicons/primeicons.css';
 @import 'boxicons/css/boxicons.min.css';
@@ -46,4 +45,8 @@ i {
     border-color: #f87171 !important; /* đỏ nhạt */
     background-color: rgba(185, 28, 28, 0.1) !important;
     color: #fecaca !important;
+}
+
+.p-inputgroup > p-password > .p-password.p-inputwrapper {
+    width: 100%;
 }
