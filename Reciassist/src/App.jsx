@@ -7,8 +7,8 @@ import {useUserStore} from './context/AuthContext';
 import {useEffect} from 'react';
 import {TestEditor} from './pages/test/TestEditor';
 import {bootstrapRecipes} from "./services/recipeService.js";
-import ProfilePage from './ProfilePages/ProfilePage'
-import ProfileEditForm from './ProfilePages/ProfileEditForm'
+import ProfilePage from './pages/ProfilePages/ProfilePage'
+import ProfileEditForm from './pages/ProfilePages/ProfileEditForm'
 import RecipeDetail from './pages/RecipeDetails'
 
 function Dashboard() {
@@ -48,4 +48,4 @@ function App() {
     )
 }
 
-export default App
+export default App;

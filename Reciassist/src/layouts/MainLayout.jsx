@@ -41,7 +41,10 @@ const MainLayout = () => {
     const leftSidebarHeaderTemplate = () => (
         <div className="flex flex-row items-center gap-3 justify-between w-full">
             <img className="w-15" src={ReciassistLogoFit} alt="Reciassist Logo"/>
-            <Button onClick={() => setShowLeftSidebar(false)} className="border-2 p-2 rounded-xl">
+            <Button onClick={() => setShowLeftSidebar(false)}
+                    className="size-10 border-2 dark;border-white p-2 rounded-xl"
+                    unstyled={true}
+            >
                 <i className="pi pi-times text-xl text-gray-900 dark:text-gray-300"/>
             </Button>
         </div>
@@ -51,7 +54,9 @@ const MainLayout = () => {
         <div className="flex flex-row items-center gap-3 justify-between w-full">
             <div
                 className="text-2xl font-semibold text-gray-900 dark:text-gray-300">{user ? user.username : "Anonymous"}</div>
-            <Button onClick={() => setShowRightSidebar(false)} className="border-2 p-2 rounded-xl">
+            <Button onClick={() => setShowRightSidebar(false)}
+                    className="size-10 border-2 dark;border-white p-2 rounded-xl"
+                    unstyled={true}>
                 <i className="pi pi-times text-xl text-gray-900 dark:text-gray-300"/>
             </Button>
         </div>
@@ -94,13 +99,15 @@ const MainLayout = () => {
         <div className="bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
             {/* Left Sidebar */}
             <Sidebar visible={showLeftSidebar} onHide={() => setShowLeftSidebar(false)} position="left"
-                     className="rounded-r-2xl border-t-2 border-r-2 border-b-2 p-5 dark:bg-gray-800 dark:border-gray-600"
+                     className="rounded-r-2xl border-t-2 border-r-2 border-b-2 p-5 bg-white dark:bg-gray-900 dark:border-gray-600"
                      header={leftSidebarHeaderTemplate}
                      showCloseIcon={false}
+
             >
                 <div className="mt-10 flex flex-col gap-y-10">
                     <SideBarItemUrl icon={<FontAwesomeIcon icon={faHome}/>} label="Homepage" url="/"/>
-                    <SideBarItemUrl icon={<FontAwesomeIcon icon={faBowlFood}/>} label="Create Recipe" url="/recipe"/>
+                    <SideBarItemUrl icon={<FontAwesomeIcon icon={faBowlFood}/>} label="Create Recipe"
+                                    url="/recipe/form"/>
                 </div>
             </Sidebar>
 
@@ -113,7 +120,7 @@ const MainLayout = () => {
                 <div className="mt-10">
                     {user ? (
                         <div className="flex flex-col gap-y-10">
-                            <SideBarItemUrl icon={<FontAwesomeIcon icon={faUser}/>} label="Profile" url="/profile"/>
+                            <SideBarItemUrl icon={<FontAwesomeIcon icon={faUser}/>} label="Profile" url="/userProfile"/>
                             <SideBarItemClick icon={<FontAwesomeIcon icon={faSignOut}/>} label="Sign Out"
                                               onClick={logout}/>
                         </div>
@@ -131,22 +138,39 @@ const MainLayout = () => {
                     className="border-b border-gray-300 dark:border-gray-700 p-3 flex flex-row justify-between items-center">
                     <div className="left-box flex flex-row items-center gap-5">
                         <Button onClick={() => setShowLeftSidebar(true)}
-                                className="pt-unstyled border-2 p-2 rounded-xl"
+                                className="size-12 border-2 p-2 rounded-xl text-center flex items-center justify-center"
+                                unstyled={true}
                         >
                             <i className="pi pi-bars text-xl"/>
                         </Button>
-                        <Button className="flex flex-row items-center gap-3 pt-unstyled">
+                        <Button
+                            className="flex flex-row items-center gap-3 pt-unstyled flex items-center justify-center"
+                            style={{
+                                padding: 0,
+                                background: "transparent",
+                                border: "none",
+                                fontFamily: "poppins",
+                            }}
+                        >
                             <img className="h-10" src={ReciassistLogoFitNoText} alt="Reciassist Logo"/>
-                            <span className="text-2xl font-semibold">Reciassist</span>
+                            <span className="text-2xl font-semibold dark:text-white text-black">Reciassist</span>
                         </Button>
                     </div>
 
-                    <div className="right-box flex flex-row items-center gap-3">
+                    <div className="right-box flex flex-row items-center gap-3 mr-3">
                         <ThemeModeButton mode={isDarkMode} onClick={() => setIsDarkMode(!isDarkMode)}/>
                         <Button
                             onClick={() => setShowRightSidebar(!showRightSidebar)}
-                            className="pt-unstyled w-12 h-12 border-2 p-0 rounded-full overflow-hidden flex items-center justify-center
-                dark:border-gray-300 border-gray-900"
+                            className="w-12 h-12 border-2 p-0 rounded-full overflow-hidden flex items-center justify-center
+                dark:border-gray-300 border-gray-900 flex items-center justify-center"
+                            style={{
+                                padding: 0,
+                                background: "transparent",
+                                color: "black",
+                                border: isDarkMode ? "solid white 2px" : "solid black 2px",
+                                borderRadius: "50%",
+                                fontFamily: "poppins",
+                            }}
                         >
                             <img src={user ? Ava1 : Anonymous}
                                  className="bg-white w-full h-full object-cover rounded-full" alt="Avatar"/>

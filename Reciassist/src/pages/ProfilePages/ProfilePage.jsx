@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Button} from 'primereact/button';
 import {Card} from 'primereact/card';
-import RecipesShow from "../layouts/components/RecipesChart";
-import RecentActivityList from '../layouts/components/RecentActivityList';
-import PeopleLikeCarousel from '../layouts/components/CommentCarousel';
+import RecipesShow from "../../layouts/components/RecipesChart.jsx";
+import RecentActivityList from '../../layouts/components/RecentActivityList.jsx';
+import PeopleLikeCarousel from '../../layouts/components/CommentCarousel.jsx';
 import {useNavigate} from 'react-router-dom';
 
 const ProfilePage = () => {
