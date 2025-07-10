@@ -3,22 +3,28 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
-import { Dropdown } from 'primereact/dropdown';
-import { useNavigate } from 'react-router-dom';
-const ProfileEditForm = () => {
+import { MultiSelect } from 'primereact/multiselect';
+import { setSession } from '../../services/authService';
+const ProfileEditForm = ({ onCancel, onSave, inlineMode = false }) => {
   const [profile, setProfile] = useState({
     username: '',
     email: '',
     tagline: '',
     avatar: '',
+    dietary: []
   });
 
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate('/userProfile');
-  }
+  const [dietaryOptions] = useState([
+    { name: 'Vegetarian', code: 'V' },
+    { name: 'Guten-free', code: 'Gf' },
+    { name: 'Omnivore', code: 'O' },
+    { name: 'Keto', code: 'K' },
+    { name: 'Flexitarian', code: 'F' }
+  ]);
 
-  const [loading, setLoading] = useState(false); // ✅ Moved inside component
+  const [dropdownDiet, setDropdownDiet] = useState([]);
+  const [customDiet, setCustomDiet] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user')) || {
@@ -26,55 +32,67 @@ const ProfileEditForm = () => {
       email: 'anonymous@reciassist.com',
       tagline: '',
       avatar: '',
+      dietary: []
     };
+
     setProfile(user);
-  }, []);
+
+    const existing = [], custom = [];
+      user.dietary?.forEach(d => {
+        const found = dietaryOptions.find(opt => opt.name === d);
+        found ? existing.push(found) : custom.push(d);
+      });
+      setDropdownDiet(existing);
+      setCustomDiet(custom);
+  }, [dietaryOptions]);
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
   const handleSave = () => {
-    setLoading(true); // ✅ Show loading
+    if (!profile.username.trim()) {
+      alert('Display Name is required.');
+      return;
+    }
+
+    const allDiet = [
+      ...dropdownDiet.map(d => d.name),
+      ...customDiet
+    ];
+
+    const updated = { ...profile, dietary: allDiet };
+    setLoading(true);
+
     setTimeout(() => {
-      localStorage.setItem('user', JSON.stringify(profile));
+      localStorage.setItem('user', JSON.stringify(updated)); // optional
+      setSession(updated); // ✅ cập nhật session để các trang khác nhận được
+      setProfile(updated);
       setLoading(false);
       alert('Profile saved!');
-    }, 1500); // delay time
+      if (onSave) onSave(updated);
+    }, 1500);
   };
-
-  const [dietary, setDietary] = useState(null);
-      const diet = [
-          { name: 'Vegetarian', code: 'Vegan' },
-          { name: 'Guten-free', code: 'Gf' },
-          { name: 'Omnivore', code: 'O' },
-          { name: 'Keto', code: 'K' },
-          { name: 'Flexitarian', code: 'F' }
-      ];
 
   return (
     <div className="flex flex-col md:flex-row gap-5 p-5">
-      {/* Sidebar */}
-      <div className="w-full md:w-1/4">
-        <Card className="text-center p-4">
-          <img
-            src={profile.avatar || 'https://www.w3schools.com/howto/img_avatar.png'}
-            alt="avatar"
-            className="w-24 h-24 mx-auto rounded-full mb-3"
-          />
-          <p className="font-semibold">{profile.email}</p>
-          <Button label="View Profile" className="mt-3 w-full" onClick={handleClick}/>
-        </Card>
-
-        <div className="mt-4 border rounded-md">
-          <div className="p-3 border-b font-bold text-black-700">Profile Settings</div>
-          <div className="p-3 border-b hover:bg-blue-50 cursor-pointer">✨ Favorite Recipes</div>
-          <div className="p-3 hover:bg-blue-50 cursor-pointer">🥄 Personal Recipes</div>
+      {/* Only show sidebar if not inline mode */}
+      {!inlineMode && (
+        <div className="w-full md:w-1/4">
+          <Card className="text-center p-4">
+            <img
+              src={profile.avatar || 'https://www.w3schools.com/howto/img_avatar.png'}
+              alt="avatar"
+              className="w-24 h-24 mx-auto rounded-full mb-3"
+            />
+            <p className="font-semibold">{profile.email}</p>
+            <Button label="View Profile" className="mt-3 w-full" onClick={onCancel} />
+          </Card>
         </div>
-      </div>
+      )}
 
-      {/* Content */}
-      <div className="w-full md:w-3/4">
+      {/* Form Content */}
+      <div className={`w-full ${inlineMode ? '' : 'md:w-3/4'}`}>
         <Card title="Profile Settings">
           <p className="text-sm text-gray-500 mb-3">
             The information on this page will be displayed on your profile, which is visible to other users.
@@ -82,68 +100,115 @@ const ProfileEditForm = () => {
 
           <div className="mb-4">
             <label className="block font-semibold mb-1">Display Name</label>
-            <InputText name="username" value={profile.username} onChange={handleChange} className="w-full border-2 border-blue-400 rounded" />
+            <InputText
+              name="username"
+              value={profile.username}
+              onChange={handleChange}
+              className="w-full border-2 border-blue-400 rounded"
+            />
           </div>
 
-          <div className="card flex justify-content-center">
-              <Dropdown value={dietary} onChange={(e) => setDietary(e.value)} options={diet} optionLabel="name" 
-                editable placeholder="Select your diet type" className="w-full border-2 border-blue-400 rounded" />
+          <div className="mb-4">
+            <label className="block font-semibold mb-1 text-gray-800">
+              Your Dietary Preferences <span className="ml-1 text-xs text-gray-500">(Press Enter to add custom)</span>
+            </label>
+
+           <MultiSelect
+            value={[...dropdownDiet, ...customDiet.map(d => ({ name: d, code: 'custom' }))]}
+            onChange={(e) => {
+              const selected = e.value || [];
+              const existing = [], custom = [];
+
+              selected.forEach(d => {
+                if (dietaryOptions.find(opt => opt.name === d.name)) {
+                  existing.push(d);
+                } else {
+                  custom.push(d.name);
+                }
+              });
+
+              setDropdownDiet(existing);
+              setCustomDiet(custom);
+            }}
+            options={[...dietaryOptions, ...customDiet.map(d => ({ name: d, code: 'custom' }))]}
+            optionLabel="name"
+            display="chip"
+            placeholder="Select or type your dietary preferences"
+            className="w-full border-2 border-blue-400"
+            filter
+          />
+
+          <InputText
+            className="mt-2 w-full border-2 border-dashed border-gray-400 p-2 rounded"
+            placeholder="Type and press Enter to add custom tag"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && e.target.value.trim()) {
+                e.preventDefault();
+                const newTag = e.target.value.trim();
+
+                if (
+                  !customDiet.includes(newTag) &&
+                  !dietaryOptions.some(opt => opt.name.toLowerCase() === newTag.toLowerCase())
+                ) {
+                  setCustomDiet(prev => [...prev, newTag]);
+                }
+
+                e.target.value = '';
+              }
+            }}
+          />
           </div>
+
           <div className="mb-4">
             <label className="block font-semibold mb-2">Describe About Yourself</label>
-            <InputTextarea name="tagline" rows={5} value={profile.tagline} onChange={handleChange} placeholder="Write down something..." className="w-full border-2 border-blue-400 rounded" />
+            <InputTextarea
+              name="tagline"
+              rows={5}
+              value={profile.tagline}
+              onChange={handleChange}
+              placeholder="Write down something..."
+              className="w-full border-2 border-blue-400 rounded"
+            />
           </div>
 
-          <div className="mb-6">
-            <div className="flex flex-col items-center">
-              <label htmlFor="avatar-upload" className="cursor-pointer bg-gray-100 rounded-md border border-blue-500 p-6 w-48 h-48 flex flex-col justify-center items-center hover:bg-gray-200 transition">
-                {profile.avatar ? (
-                  <img src={profile.avatar} alt="avatar" className="w-24 h-24 rounded-full mb-3" />
-                ) : (
-                  <div className="border-2 border-blue-500 rounded-full w-24 h-24 flex items-center justify-center mb-3">
-                    <i className="pi pi-camera text-blue-500 text-2xl"></i>
-                  </div>
-                )}
-                <span className="text-sm font-semibold text-black">Profile Photo</span>
-                <input
-                  id="avatar-upload"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onload = (e) => {
-                        setProfile({ ...profile, avatar: e.target.result });
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  }}
-                />
-              </label>
-            </div>
+          <div className="mb-6 flex justify-center">
+            <label htmlFor="avatar-upload" className="cursor-pointer bg-gray-100 rounded-md border border-blue-500 p-6 w-48 h-48 flex flex-col justify-center items-center hover:bg-gray-200 transition">
+              {profile.avatar ? (
+                <img src={profile.avatar} alt="avatar" className="w-24 h-24 rounded-full mb-3" />
+              ) : (
+                <div className="border-2 border-blue-500 rounded-full w-24 h-24 flex items-center justify-center mb-3">
+                  <i className="pi pi-camera text-blue-500 text-2xl"></i>
+                </div>
+              )}
+              <span className="text-sm font-semibold text-black">Profile Photo</span>
+              <input
+                id="avatar-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                      setProfile({ ...profile, avatar: e.target.result });
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                }}
+              />
+            </label>
           </div>
 
-          {/*  Save Button with loading */}
-          <div className="flex justify-center">
-  <Button
-  label="Save Changes"
-  icon="pi pi-check"
-  loading={loading}
-  onClick={() => {
-    setLoading(true);
-    setTimeout(() => {
-      handleSave();
-      setLoading(false);
-    }, 1500);
-  }}
-  className="mt-5 w-48 bg-sky-400 text-white font-semibold hover:bg-sky-300 rounded-lg gap-2 px-5 py-2 shadow-md hover:shadow-lg transition-all flex items-center justify-center"
-
-
-/>
-</div>
-
+          <div className="flex justify-center gap-3">
+            
+            <Button
+              label={loading ? 'Saving...' : 'Save Changes'}
+              className="edit-profile-btn"
+              onClick={handleSave}
+              disabled={loading}
+            />
+          </div>
         </Card>
       </div>
     </div>

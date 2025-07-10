@@ -80,3 +80,28 @@ i {
 .p-icon-field.p-icon-field-right {
     width: 100% !important;
 }
+
+/* for editProfile */
+.p-multiselect-token {
+  @apply bg-blue-100 text-blue-800 border border-blue-500 rounded-md text-sm px-2 py-1 shadow-sm;
+}
+
+.p-multiselect-token-label {
+  @apply font-medium;
+}
+
+.p-multiselect-token-icon {
+  @apply text-blue-500 hover:text-red-500;
+}
+
+.p-checkbox-box {
+  @apply border-blue-500 border-2 rounded-md shadow-sm bg-white hover:border-blue-700;
+}
+
+.p-checkbox-box.p-highlight {
+  @apply bg-blue-500 border-blue-600 text-white;
+}
+
+.p-checkbox-icon {
+  @apply text-white;
+}
