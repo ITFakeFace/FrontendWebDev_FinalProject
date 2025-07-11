@@ -95,7 +95,7 @@ i {
 }
 
 .p-checkbox-box {
-  @apply border-blue-500 border-2 rounded-md shadow-sm bg-white hover:border-blue-700;
+  @apply border-blue-500 border-2 rounded-md shadow-sm hover:border-blue-700;
 }
 
 .p-checkbox-box.p-highlight {
