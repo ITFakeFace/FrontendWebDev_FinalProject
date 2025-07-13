@@ -39,24 +39,6 @@ Run these inside the `Reciassist/` folder:
 
 > 💡 Make sure `vite.config.js` has correct `base` for GitHub Pages.
 
-## 🌐 GitHub Pages Deployment  
-1. Add this in `package.json`:
-```json
-"homepage": "https://<your-username>.github.io/<your-repo-name>"
-```
-2. Add scripts:
-```json
-"scripts": {
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
-}
-```
-3. Deploy:
-```bash
-npm run deploy
-```
-Your app will be live at the GitHub Pages link!
-
 ## 📦 Dependencies  
 - React `^19.1.0`
 - React DOM `^19.1.0`
