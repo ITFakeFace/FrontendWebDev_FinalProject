@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { DndContext, DragOverlay, useDraggable, useDroppable } from '@dnd-kit/core';
 import { CalendarDays, ChefHat, Clock, X, Sparkles, Star, Users, Utensils } from 'lucide-react';
-import rawRecipes from '../../services/data/recipes.json';
+import rawRecipes from '../../services/datas/recipies.json';
 import Calendar from './components/Calendar';
 import RecipeCard from './components/RecipeCard';
 import MealSlot from './components/MealSlot';
@@ -21,18 +21,41 @@ const MealPlanner = () => {
     'from-blue-400 to-blue-600'
   ];
 
+  const getDifficultyLabel = (value) => {
+  switch (value) {
+    case 1: return 'Easy';
+    case 2: return 'Medium';
+    case 3: return 'Hard';
+    default: return 'Unknown';
+  }
+};
+
+  const convertCookingTime = (isoTime) => {
+    try {
+      const date = new Date(isoTime);
+      const now = new Date();
+      const diff = Math.abs(now - date); // in ms
+      const minutes = Math.floor(diff / 60000);
+      return `${minutes} min`;
+    } catch {
+      return 'N/A';
+    }
+  };
+
   const mapRecipes = (recipes) => {
     return recipes.map((r, idx) => ({
       id: r.id.toString(),
-      title: r.title,
-      category: r.category || 'Uncategorized',
-      cookTime: `${r.cookingTime} min`,
-      difficulty: r.level || 'Medium',
-      servings: r.servings,
+      title: r.name || 'Untitled',
+      category: r.categories?.[0] || 'Uncategorized',
+      cookTime: `${r.cookingDuration} min`,
+      difficulty: getDifficultyLabel(r.difficulty),
+      servings: r.servings || 1,
       color: colorMap[idx % colorMap.length],
-      fullData: r // giữ lại toàn bộ thông tin gốc nếu cần dùng sau
+      image: r.image,
+      fullData: r
     }));
   };
+
   const [recipes] = useState(() => mapRecipes(rawRecipes));
 
   const [difficultyFilter, setDifficultyFilter] = useState('All');
