@@ -14,7 +14,7 @@ import './assets/styles/animation.css';
 import ForgotPasswordPage from "./pages/authentication/ForgotPasswordPage.jsx";
 import ProfileEditForm from "./pages/ProfilePages/ProfileEditForm.jsx";
 import ProfilePage from "./pages/ProfilePages/ProfilePage.jsx";
-
+import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes.jsx';
 function Dashboard() {
     return (
         <div className='w-full'>
@@ -40,6 +40,7 @@ function App() {
                 <Route path="recipe/form/:id" element={<RecipeFormPage/>}/>
                 <Route path="/userEdit" element={<ProfileEditForm/>}/>
                 <Route path="/userProfile" element={<ProfilePage/>}/>
+                <Route path="/favorite-recipes" element={<FavoriteRecipes/>}/>
                 <Route path="/recipes" element={<RecipeList/>}/>
                 <Route path="/recipe/:slug" element={<RecipeDetail/>}/>
                 <Route path="/meal-planner" element={<MealPlanner/>}/>

@@ -1,76 +1,141 @@
-import React, {useEffect, useState} from 'react';
-import {Button} from 'primereact/button';
-import {Card} from 'primereact/card';
-import RecipesShow from "../../layouts/components/RecipesChart.jsx";
-import RecentActivityList from '../../layouts/components/RecentActivityList.jsx';
-import PeopleLikeCarousel from '../../layouts/components/CommentCarousel.jsx';
-import {useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
+import RecipesShow from "../ProfilePages/RecipesChart";
+import RecentActivityList from '../ProfilePages/RecentActivityList';
+import PeopleLikeCarousel from '../ProfilePages/CommentCarousel';
+import ProfileEditForm from '../ProfilePages/ProfileEditForm';
+import './ProfilePage.css';
+import { useNavigate } from 'react-router-dom';
+import { getCurrentUser } from '../../services/authService'; 
 
 const ProfilePage = () => {
-    const [profile, setProfile] = useState({
-        username: '',
-        email: '',
-        tagline: '',
-        avatar: '',
-    });
+  const [profile, setProfile] = useState({
+    username: '',
+    email: '',
+    tagline: '',
+    avatar: '',
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
 
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user')) || {
-            username: 'Anonymous',
-            email: 'anonymous@reciassist.com',
-            tagline: '',
-            avatar: '',
-        };
-        setProfile(user);
-    }, []);
+  useEffect(() => {
+  setTimeout(() => {
+    const user = getCurrentUser() || {
+      username: 'Anonymous',
+      email: '',
+      tagline: '',
+      avatar: '',
+    };
+    setProfile(user);
+    setIsLoading(false);
+  }, 500); // hoặc bỏ setTimeout nếu không cần loading delay
+}, []);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('/userEdit');
-    }
+  if (isLoading) return <div className="loading-container"></div>;
 
+  return (
+    <div className="profile-page-container w-full">
+      <div className="profile-background-gradient"></div>
 
-    return (
-        <div className="flex flex-col md:flex-row gap-5 p-5 w-full">
-            {/* Sidebar on the left */}
-            <div className="w-full md:w-1/4 flex flex-col gap-4">
-                <Card className="text-center p-4">
-                    <img
-                        src={profile.avatar || 'https://www.w3schools.com/howto/img_avatar.png'}
-                        alt="avatar"
-                        className="w-24 h-24 mx-auto rounded-full mb-3"
-                    />
-                    <p className="font-semibold">{profile.email}</p>
-                    <Button label="Edit Profile" className="mt-3 w-full" onClick={handleClick}/>
-                </Card>
-
-                <div className="border rounded-md">
-                    <div className="p-3 border-b font-bold text-black-700">Profile Settings</div>
-                    <div className="p-3 border-b hover:bg-blue-50 cursor-pointer">✨ Favorite Recipes</div>
-                    <div className="p-3 hover:bg-blue-50 cursor-pointer">🥄 Personal Recipes</div>
-                </div>
-
-                <Card>
-                    <RecipesShow/>
-                </Card>
+      <div className="profile-content">
+        {/* Sidebar */}
+        <div className="profile-sidebar w-full md:w-1/4">
+          <Card className="profile-card animate-slide-up">
+            <div className="profile-header">
+              <div className="avatar-container">
+                <img
+                  src={profile.avatar || 'https://www.w3schools.com/howto/img_avatar.png'}
+                  alt="avatar"
+                  className="profile-avatar"
+                />
+                <div className="avatar-ring"></div>
+              </div>
+              <div className="profile-info">
+                <h2 className="profile-name">{profile.displayName || 'Anonymous'}</h2>
+                <p className="profile-email">{profile.email}</p>
+                <p className="profile-tagline">{profile.tagline}</p>
+              </div>
+              <Button
+                label={isEditing ? "View Profile" : "Edit Profile"}
+                className="edit-profile-btn"
+                onClick={() => setIsEditing(prev => !prev)}
+              />
             </div>
+          </Card>
 
-            {/* Main content on the right */}
-            <div className="w-full md:w-3/4 flex-1">
-                <Card title="People who likes your recipes" className="mb-5">
-                    <PeopleLikeCarousel/>
-                    <br/>
-                    <div className="w-full md:w-4/4">
-                        <Card title="Recent Activity" className="mb-5">
-                            <RecentActivityList/>
-                        </Card>
-                    </div>
-
-                </Card>
+          <Card className="settings-card animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            <div className="settings-header"><h3>Profile Settings</h3></div>
+            <div className="settings-menu">
+              <div className="settings-item" onClick={() => navigate('/favorite-recipes')}>
+                <span className="settings-icon">✨</span>
+                <span>Favorite Recipes</span>
+                <span className="settings-arrow">→</span>
+              </div>
+              <div className="settings-item">
+                <span className="settings-icon">🥄</span>
+                <span>Personal Recipes</span>
+                <span className="settings-arrow">→</span>
+              </div>
+              <div className="settings-item">
+                <span className="settings-icon">📊</span>
+                <span>Analytics</span>
+                <span className="settings-arrow">→</span>
+              </div>
             </div>
+          </Card>
+
+          <Card className="chart-card animate-slide-up" style={{ animationDelay: '0.4s' }}>
+            <div className="chart-container">
+              <RecipesShow />
+            </div>
+          </Card>
         </div>
-    );
+
+        {/* Main Content */}
+        <div className="profile-main-content w-full md:w-3/4">
+          {isEditing ? (
+            <ProfileEditForm
+                inlineMode={true}
+                onCancel={() => setIsEditing(false)}
+                onSave={(updatedUser) => {
+                    setProfile(updatedUser);        // ✅ cập nhật thông tin mới
+                    setIsEditing(false);            // ✅ thoát form edit
+                }}
+            />
+          ) : (
+            <>
+              <Card className="carousel-card animate-fade-in" style={{ animationDelay: '0.6s' }}>
+                <div className="card-header">
+                  <h3 className="card-title">
+                    <span className="title-icon">💝</span>
+                    People who likes your recipes
+                  </h3>
+                </div>
+                <div className="carousel-container">
+                  <PeopleLikeCarousel />
+                </div>
+              </Card>
+
+              <Card className="activity-card animate-fade-in" style={{ animationDelay: '0.8s' }}>
+                <div className="card-header">
+                  <h3 className="card-title">
+                    <span className="title-icon">📈</span>
+                    Recent Activity
+                  </h3>
+                </div>
+                <div className="activity-container">
+                  <RecentActivityList />
+                </div>
+              </Card>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ProfilePage;
