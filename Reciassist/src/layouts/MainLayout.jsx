@@ -1,7 +1,7 @@
 import {Button} from "primereact/button";
 import {Sidebar} from "primereact/sidebar";
 import {useEffect, useRef, useState} from "react";
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import ReciassistLogoFitNoText from '../assets/logo/Reciassist_Logo_Fit_NoText.png';
 import ReciassistLogoFit from '../assets/logo/Reciassist_Logo_Fit.png';
 import Anonymous from '../assets/user/avatars/Anonymous.png';
@@ -24,7 +24,7 @@ const MainLayout = () => {
     const {user, logout} = useUserStore();
     const toastRef = useRef(null);
     const setToastRef = useToast((s) => s.setToastRef);
-
+    const navigate = useNavigate();
     useEffect(() => {
         setToastRef(toastRef);
     }, [setToastRef]);
@@ -109,7 +109,8 @@ const MainLayout = () => {
                     <SideBarItemUrl icon={<FontAwesomeIcon icon={faBowlFood}/>} label="Create Recipe"
                                     url="/recipe/form"/>
                     <SideBarItemUrl icon={<FontAwesomeIcon icon={faBowlFood}/>} label="Recipes" url="/recipes"/>
-                    <SideBarItemUrl icon={<FontAwesomeIcon icon={faUtensils}/>} label="Meal Planner" url="/meal-planner"/>
+                    <SideBarItemUrl icon={<FontAwesomeIcon icon={faUtensils}/>} label="Meal Planner"
+                                    url="/meal-planner"/>
                 </div>
             </Sidebar>
 
@@ -153,6 +154,7 @@ const MainLayout = () => {
                                 border: "none",
                                 fontFamily: "poppins",
                             }}
+                            onClick={() => navigate("/")}
                         >
                             <img className="h-10" src={ReciassistLogoFitNoText} alt="Reciassist Logo"/>
                             <span className="text-2xl font-semibold dark:text-white text-black">Reciassist</span>
@@ -181,7 +183,7 @@ const MainLayout = () => {
                 </header>
 
                 {/* Body */}
-                <main className="flex flex-1 mx-15 my-5 justify-center">
+                <main className="flex flex-1 justify-center">
                     <Toast
                         ref={toastRef} pt={TailwindToast.toast}
                     />
@@ -189,8 +191,18 @@ const MainLayout = () => {
                 </main>
 
                 {/* Footer */}
-                <footer className="bg-gray-800 text-white p-4 dark:bg-gray-900 dark:text-gray-300">
-                    Footer
+                <footer className="bg-gray-800 text-white dark:bg-gray-900 dark:text-gray-300 py-6">
+                    <div
+                        className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-y-4">
+                        <div className="text-lg font-semibold">
+                            Reciassist © {new Date().getFullYear()}
+                        </div>
+                        <div className="flex space-x-4 text-sm">
+                            <a href="/about" className="hover:underline">About</a>
+                            <a href="/contact" className="hover:underline">Contact</a>
+                            <a href="/terms" className="hover:underline">Terms</a>
+                        </div>
+                    </div>
                 </footer>
             </div>
         </div>

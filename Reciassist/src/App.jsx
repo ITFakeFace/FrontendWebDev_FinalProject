@@ -16,6 +16,7 @@ import ForgotPasswordPage from "./pages/authentication/ForgotPasswordPage.jsx";
 import ProfileEditForm from "./pages/ProfilePages/ProfileEditForm.jsx";
 import ProfilePage from "./pages/ProfilePages/ProfilePage.jsx";
 import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes.jsx';
+
 function App() {
     const {bootstrap} = useUserStore();
 

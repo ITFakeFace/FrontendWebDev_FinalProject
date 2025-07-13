@@ -248,18 +248,35 @@ const RecipeFormPage = () => {
     };
 
     const loadRecipe = async (id) => {
-        // 1. Lấy từ localStorage
         const rawRecipe = await getFormattedRecipeId(id);
+
         if (!rawRecipe) {
             console.warn("❌ Không tìm thấy recipe id:", id);
             return;
         }
+
+        // Kiểm tra quyền truy cập
+        console.log(rawRecipe.createdBy != user.id)
+        if (user && rawRecipe.createdBy != user.id) {
+            showToast("You don't have permission to access this recipe", "warn");
+
+            if (window.history.length > 1) {
+                navigate(-1);
+            } else {
+                navigate("/recipies");
+            }
+
+            return;
+        }
+
         const hydratedRecipe = {
             ...rawRecipe,
             cookingTime: rawRecipe.cookingTime ? new Date(rawRecipe.cookingTime) : null,
         };
+
         setRecipe(hydratedRecipe);
     };
+
 
     useEffect(() => {
         if (user == null) {
@@ -276,7 +293,7 @@ const RecipeFormPage = () => {
 
     return (
         <div className="container">
-            <div className="flex flex-col gap-3 w-full border-0">
+            <div className="flex flex-col gap-3 w-full border-0 mt-5">
                 <Panel ref={basicInfoPanelRef} headerTemplate={basicInfoPanelHeader} toggleable className="w-full"
                        pt={TailwindPanel.panel}
                 >
