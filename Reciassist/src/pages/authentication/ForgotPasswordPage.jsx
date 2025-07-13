@@ -8,6 +8,7 @@ import {AnimatePresence, motion} from "framer-motion";
 import {Password} from "primereact/password";
 import {classNames} from "primereact/utils";
 import {Toast} from "primereact/toast";
+import {useNavigate} from "react-router-dom";
 
 const ForgotPasswordPage = () => {
     let emptyResetUser = {
@@ -107,6 +108,7 @@ const ForgotPasswordPage = () => {
     const [resetUser, setResetUser] = useState(emptyResetUser);
     const [activeIndex, setActiveIndex] = useState(0);
     const toast = useRef();
+    const navigate = useNavigate();
     const itemRenderer = (item, itemIndex) => {
         const isActiveItem = activeIndex === itemIndex;
         const backgroundColor = isActiveItem ? 'var(--gray-500)' : 'var(--surface-b)';
@@ -149,6 +151,7 @@ const ForgotPasswordPage = () => {
         if (isValidEmail(resetUser.email)) {
             showToast(`Validation Code has been sent to email ${maskEmail(resetUser.email)}`, "success");
             setActiveIndex(1);
+            setResetUser(prev => ({...prev, otp: ""}));
         } else {
             setInvalid(document.querySelector("#input-email"), true);
         }
@@ -175,7 +178,14 @@ const ForgotPasswordPage = () => {
                         </span>
                     </div>
                 </div>
-                <div className="w-full flex flex-row justify-end">
+                <div className="w-full flex flex-row justify-between">
+                    <Button
+                        className="border-2 border-gray-600 rounded-xl px-5 py-2 hover:text-white hover:bg-gray-600"
+                        onClick={() => navigate("/sign-in")}
+                    >
+                        <i className="pi pi-arrow-left text-lg mr-2"/>
+                        Back to Login
+                    </Button>
                     <Button
                         className="border-2 border-gray-600 rounded-xl px-5 py-2 hover:text-white hover:bg-gray-600"
                         onClick={Step1Click}
@@ -188,6 +198,34 @@ const ForgotPasswordPage = () => {
         )
     }
 
+    const [resendCooldown, setResendCooldown] = useState(0);
+
+    useEffect(() => {
+        let timer;
+        if (resendCooldown > 0) {
+            timer = setTimeout(() => setResendCooldown(resendCooldown - 1), 1000);
+        }
+        return () => clearTimeout(timer);
+    }, [resendCooldown]);
+
+    const handleResendClick = () => {
+        // Fake resend email action
+        console.log(`Resending code to ${resetUser.email}`);
+        setResendCooldown(60);
+    };
+
+    const Step2Click = () => {
+        if (resetUser.otp == "123456" || resetUser.otp == "") {
+            const otpInputs = document.querySelectorAll(".p-inputotp-input");
+            otpInputs.forEach(input => {
+                setInvalid(input, true); // setInvalid giống như hàm bạn đã dùng
+            });
+        } else {
+            showToast("Success", "success");
+            setActiveIndex(2); // Đi tiếp nếu code hợp lệ
+        }
+    };
+
     const OTPForm = () => {
         return (
             <div className="w-3/5 flex flex-col mb-5 items-center justify-self-center">
@@ -197,8 +235,9 @@ const ForgotPasswordPage = () => {
                 <div className="w-fit flex items-center">
                     <span className="text-color-secondary block mb-5">Please enter the code sent to your email.</span>
                 </div>
-                <div className="w-full flex justify-center items-center mb-10">
+                <div className="w-full flex justify-center items-center mb-5">
                     <InputOtp
+                        id="input-otp"
                         value={resetUser.otp} onChange={(e) => onResetUserChange(e.value, "otp")} length={6}
                         className="text-3xl "
                         pt={{
@@ -210,6 +249,22 @@ const ForgotPasswordPage = () => {
                         }}
                     />
                 </div>
+                {/* Resend Code Section */}
+                <div className="mb-10">
+                    <Button
+                        disabled={resendCooldown > 0}
+                        onClick={handleResendClick}
+                        className={`border-2 rounded-xl px-4 py-2 transition ${
+                            resendCooldown > 0
+                                ? "border-gray-400 text-gray-400 cursor-not-allowed"
+                                : "border-blue-600 text-blue-600 hover:text-white hover:bg-blue-600"
+                        }`}
+                    >
+                        {resendCooldown > 0
+                            ? `Resend code (${resendCooldown}s)`
+                            : `Resend code to ${resetUser.email}`}
+                    </Button>
+                </div>
                 <div className="w-full flex flex-row justify-between">
                     <Button
                         className="border-2 border-gray-600 rounded-xl px-5 py-2 hover:text-white hover:bg-gray-600"
@@ -219,7 +274,7 @@ const ForgotPasswordPage = () => {
                     </Button>
                     <Button
                         className="border-2 border-gray-600 rounded-xl px-5 py-2 hover:text-white hover:bg-gray-600"
-                        onClick={() => setActiveIndex(2)}
+                        onClick={Step2Click}
                     >
                         Go to next step
                     </Button>
@@ -227,6 +282,44 @@ const ForgotPasswordPage = () => {
             </div>
         )
     }
+
+    const [passwordMismatch, setPasswordMismatch] = useState(false);
+
+    const Step3Click = () => {
+        const passwordInput = document.querySelector("#new-password");
+        const confirmInput = document.querySelector("#confirm-password");
+
+        let isValid = true;
+
+        if (!resetUser.password || resetUser.password.length < 6) {
+            setInvalid(passwordInput, true);
+            isValid = false;
+        } else {
+            setInvalid(passwordInput, false);
+        }
+
+        if (resetUser.password !== resetUser.confirmPassword) {
+            setInvalid(confirmInput, true);
+            setPasswordMismatch(true); // Hiển thị lỗi
+            isValid = false;
+        } else {
+            setInvalid(confirmInput, false);
+            setPasswordMismatch(false);
+        }
+
+        if (isValid) {
+            changePassword(); // Gọi API đổi mật khẩu
+            showToast("Password changed successfully", "success");
+
+            // Chờ toast hiển thị xong (3s), sau đó chuyển trang
+            setTimeout(() => {
+                navigate("/sign-in");
+            }, 1500); // 3000ms là thời gian Toast tồn tại
+        } else {
+            showToast("Invalid password or mismatch", "error");
+        }
+    };
+
 
     const NewPasswordForm = () => {
         return (
@@ -239,29 +332,41 @@ const ForgotPasswordPage = () => {
                 </div>
                 <div className="w-3/5 flex text-lg mb-10">
                     <div className="w-full p-inputgroup flex-1 border-2 border-gray-600 rounded-xl overflow-hidden">
-                        <Password value={resetUser.password}
-                                  onChange={(e) => onResetUserChange(e.target.value, "password")}
-                                  className="pl-3 py-2 w-full" placeholder="Enter new password..."
-                                  pt={PrimeReactTailwind.password}
-                                  toggleMask={true}
+                        <Password
+                            id="new-password"
+                            value={resetUser.password}
+                            onChange={(e) => onResetUserChange(e.target.value, "password")}
+                            className="pl-3 py-2 w-full" placeholder="Enter new password..."
+                            pt={PrimeReactTailwind.password}
+                            toggleMask={true}
                         />
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-lock text-2xl"/>
                         </span>
                     </div>
                 </div>
-                <div className="w-3/5 flex text-lg mb-10">
-                    <div className="w-full p-inputgroup flex-1 border-2 border-gray-600 rounded-xl overflow-hidden">
-                        <Password value={resetUser.confirmPassword}
-                                  onChange={(e) => onResetUserChange(e.target.value, "confirmPassword")}
-                                  className="pl-3 py-2 w-full" placeholder="Confirm password..."
-                                  pt={PrimeReactTailwind.password}
-                                  toggleMask={true}
-                                  feedback={false}
+                <div className="w-3/5 flex flex-col text-lg mb-10 gap-5">
+                    <div
+                        className="w-full p-inputgroup flex-1 border-2 border-gray-600 rounded-xl overflow-hidden">
+                        <Password
+                            id="confirm-password"
+                            value={resetUser.confirmPassword}
+                            onChange={(e) => onResetUserChange(e.target.value, "confirmPassword")}
+                            className="pl-3 py-2 w-full" placeholder="Confirm password..."
+                            pt={PrimeReactTailwind.password}
+                            toggleMask={true}
+                            feedback={false}
                         />
                         <span className="p-inputgroup-addon">
                             <i className="pi pi-lock text-2xl"/>
                         </span>
+                    </div>
+                    <div>
+                        {passwordMismatch && (
+                            <span className="text-red-500 text-sm ml-3">
+                                Password and Confirm Password do not match.
+                            </span>
+                        )}
                     </div>
                 </div>
                 <div className="w-full flex flex-row justify-between">
@@ -273,7 +378,7 @@ const ForgotPasswordPage = () => {
                     </Button>
                     <Button
                         className="border-2 border-gray-600 rounded-xl px-5 py-2 hover:text-white hover:bg-gray-600"
-                        onClick={() => changePassword()}
+                        onClick={Step3Click}
                     >
                         Recovery Password
                     </Button>
