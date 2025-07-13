@@ -262,7 +262,7 @@ const ForgotPasswordPage = () => {
                     >
                         {resendCooldown > 0
                             ? `Resend code (${resendCooldown}s)`
-                            : `Resend code to ${resetUser.email}`}
+                            : `Resend code to ${maskEmail(resetUser.email)}`}
                     </Button>
                 </div>
                 <div className="w-full flex flex-row justify-between">
