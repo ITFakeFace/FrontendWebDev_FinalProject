@@ -9,7 +9,7 @@ import Tailwind from "primereact/passthrough/tailwind/index.js";
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <BrowserRouter>
+        <BrowserRouter basename="/FrontendWebDev_FinalProject">
             <PrimeReactProvider value={{pt: Tailwind}}>
                 <App/>
             </PrimeReactProvider>
