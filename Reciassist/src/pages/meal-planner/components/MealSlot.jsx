@@ -51,11 +51,20 @@ const MealSlot = ({ title, date, mealType, recipes, onRemoveRecipe }) => {
               <div className="bg-white rounded-lg border border-gray-200 p-3 shadow-sm hover:shadow-md transition-all duration-200">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <span className="font-semibold text-gray-800">{recipe.title}</span>
-                    <div className="flex items-center mt-1 text-xs text-gray-500">
-                      <span className="mr-3">{recipe.category}</span>
-                      <Clock className="w-3 h-3 mr-1" />
-                      <span>{recipe.cookTime}</span>
+                    <div>
+                      <p className="font-semibold text-gray-800">{recipe.title}</p>
+                      <div className="flex flex-wrap items-center mt-1 text-xs text-gray-500 gap-x-3">
+                        <span>{recipe.category}</span>
+                        <span className="flex items-center">
+                          <Clock className="w-3 h-3 mr-1" />
+                          {recipe.cookTime}
+                        </span>
+                        {recipe.difficulty && (
+                          <span className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded-full">
+                            {recipe.difficulty}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <button

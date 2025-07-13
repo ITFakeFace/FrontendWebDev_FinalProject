@@ -10,16 +10,48 @@ const RecipeCard = ({ recipe, index, image, generateSlug, isFavorited, onToggleF
     onToggleFavorite(recipe.id);
   };
 
+  // Map difficulty numbers to level names
+  const difficultyMap = {
+    1: 'Easy',
+    2: 'Medium',
+    3: 'Hard'
+  };
+
+  // Get the difficulty level text
+  const difficultyLevel = difficultyMap[recipe.difficulty] || 'Unknown';
+
+  // Calculate average rating
+  const averageRating = Array.isArray(recipe.ratings) && recipe.ratings.length > 0
+    ? (recipe.ratings.reduce((sum, r) => sum + r.rating, 0) / recipe.ratings.length).toFixed(1)
+    : 'N/A';
+
+  // Format cooking time from ISO string to readable format
+  const formatCookingTime = (isoString) => {
+    if (!isoString) return 'N/A';
+    try {
+      const date = new Date(isoString);
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      
+      if (hours > 0) {
+        return `${hours}h ${minutes}m`;
+      }
+      return `${minutes}m`;
+    } catch (error) {
+      return 'N/A';
+    }
+  };
+
   return (
     <div
       className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 cursor-pointer animate-fade-in-up"
       style={{ animationDelay: `${0.1 * index}s` }}
-      onClick={() => navigate(`/recipe/${generateSlug(recipe.title)}`)}
+      onClick={() => navigate(`/recipe/${generateSlug(recipe.name)}`)}
     >
       <div className="relative overflow-hidden h-48">
         <img
-          src={image}
-          alt={recipe.title}
+          src={image || recipe.image}
+          alt={recipe.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
 
@@ -44,48 +76,39 @@ const RecipeCard = ({ recipe, index, image, generateSlug, isFavorited, onToggleF
           <svg className="w-4 h-4 text-yellow-500 fill-current" viewBox="0 0 24 24">
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
           </svg>
-          <span className="text-sm font-semibold text-gray-800">{Array.isArray(recipe.ratings) && recipe.ratings.length > 0
-              ? (
-                  recipe.ratings.reduce((sum, r) => sum + r.rating, 0) / recipe.ratings.length
-                ).toFixed(1)
-              : 'N/A'}
-          </span>
+          <span className="text-sm font-semibold text-gray-800">{averageRating}</span>
         </div>
       </div>
 
       <div className="p-6">
         <div className="flex items-center justify-between mb-3">
           <span className="text-sm font-medium text-orange-600 bg-orange-100 px-3 py-1 rounded-full">
-            {recipe.category}
+            {recipe.categories && recipe.categories.length > 0 ? recipe.categories[0] : 'Uncategorized'}
           </span>
           <div className="flex items-center gap-1 text-gray-500">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span className="text-sm">{recipe.cookingTime} min</span>
+            <span className="text-sm">{recipe.cookingDuration} min</span>
           </div>
         </div>
 
         <h2 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-orange-600 transition-colors duration-300">
-          {recipe.title}
+          {recipe.name}
         </h2>
 
         <div className="flex items-center justify-between">
           <span className="text-yellow-500 font-semibold">
-            ⭐ {Array.isArray(recipe.ratings) && recipe.ratings.length > 0
-              ? (
-                  recipe.ratings.reduce((sum, r) => sum + r.rating, 0) / recipe.ratings.length
-                ).toFixed(1)
-              : 'N/A'}
+            ⭐ {averageRating}
           </span>
           <span className={`text-sm px-3 py-1 rounded-full font-medium ${
-            recipe.level === "Easy"
+            difficultyLevel === "Easy"
               ? "bg-green-100 text-green-700 group-hover:bg-green-200"
-              : recipe.level === "Medium"
+              : difficultyLevel === "Medium"
               ? "bg-yellow-100 text-yellow-700 group-hover:bg-yellow-200"
               : "bg-red-100 text-red-700 group-hover:bg-red-200"
           }`}>
-            {recipe.level}
+            {difficultyLevel}
           </span>
         </div>
       </div>
@@ -95,7 +118,7 @@ const RecipeCard = ({ recipe, index, image, generateSlug, isFavorited, onToggleF
           className="bg-white text-orange-600 px-6 py-2 rounded-full font-semibold hover:bg-orange-50 transition-colors duration-300 transform translate-y-4 group-hover:translate-y-0"
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/recipe/${generateSlug(recipe.title)}`);
+            navigate(`/recipe/${generateSlug(recipe.name)}`);
           }}
         >
           View Recipe
