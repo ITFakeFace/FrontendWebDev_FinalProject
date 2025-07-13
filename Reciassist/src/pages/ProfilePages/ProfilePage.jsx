@@ -23,8 +23,8 @@ const ProfilePage = () => {
   setTimeout(() => {
     const user = getCurrentUser() || {
       username: 'Anonymous',
-      email: 'anonymous@reciassist.com',
-      tagline: 'Cooking enthusiast',
+      email: '',
+      tagline: '',
       avatar: '',
     };
     setProfile(user);
@@ -54,7 +54,7 @@ const ProfilePage = () => {
                 <div className="avatar-ring"></div>
               </div>
               <div className="profile-info">
-                <h2 className="profile-name">{profile.username || 'Anonymous'}</h2>
+                <h2 className="profile-name">{profile.displayName || 'Anonymous'}</h2>
                 <p className="profile-email">{profile.email}</p>
                 <p className="profile-tagline">{profile.tagline}</p>
               </div>

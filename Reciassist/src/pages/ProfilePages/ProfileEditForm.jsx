@@ -4,15 +4,18 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { MultiSelect } from 'primereact/multiselect';
-import { setSession } from '../../services/authService';
-
+import { getCurrentUser, setSession } from '../../services/authService';
+import { Dropdown } from 'primereact/dropdown';
 const ProfileEditForm = ({ onCancel, onSave, inlineMode = false }) => {
   const [profile, setProfile] = useState({
     username: '',
+    displayName: '',
     email: '',
     tagline: '',
     avatar: '',
-    dietary: []
+    dietary: [],
+    phone: '',
+    gender: ''
   });
 
   const [dietaryOptions] = useState([
@@ -22,63 +25,95 @@ const ProfileEditForm = ({ onCancel, onSave, inlineMode = false }) => {
     { name: 'Keto', code: 'K' },
     { name: 'Flexitarian', code: 'F' }
   ]);
-
+  
+  const genderOptions = [
+    { label: 'Male', value: 'Male' },
+    { label: 'Female', value: 'Female' },
+    { label: 'Other', value: 'Other' }
+  ];
   const [dropdownDiet, setDropdownDiet] = useState([]);
   const [customDiet, setCustomDiet] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isImageHovered, setIsImageHovered] = useState(false);
-
+  const [phoneError, setPhoneError] = useState('');
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user')) || {
-      username: 'Anonymous',
-      email: 'anonymous@reciassist.com',
-      tagline: '',
-      avatar: '',
-      dietary: []
-    };
-
-    setProfile(user);
-
-    const existing = [], custom = [];
-    user.dietary?.forEach(d => {
-      const found = dietaryOptions.find(opt => opt.name === d);
-      found ? existing.push(found) : custom.push(d);
-    });
-    setDropdownDiet(existing);
-    setCustomDiet(custom);
-  }, [dietaryOptions]);
-
-  const handleChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
+  const user = getCurrentUser() || {
+    username: 'Anonymous',
+    displayName: 'Anonymous',
+    email: 'anonymous@reciassist.com',
+    tagline: '',
+    avatar: '',
+    dietary: [],
+    phone: '',
+    gender: ''
   };
+
+  setProfile(user);
+
+  const existing = [], custom = [];
+  user.dietary?.forEach(d => {
+    const found = dietaryOptions.find(opt => opt.name === d);
+    found ? existing.push(found) : custom.push(d);
+  });
+
+  setDropdownDiet(existing);
+  setCustomDiet(custom);
+}, []);
+  const handleChange = (e) => {
+  const { name, value } = e.target;
+  setProfile({ ...profile, [name]: value });
+
+  if (name === 'phone') {
+    const phonePattern = /^[+]?[\d\- ]*$/;
+    if (value && !phonePattern.test(value)) {
+      setPhoneError('Phone number can only contain digits, hyphens (-), spaces, or an optional + sign.');
+    } else {
+      setPhoneError('');
+    }
+  }
+};
 
   const handleSave = () => {
-    if (!profile.username.trim()) {
-      alert('Display Name is required.');
-      return;
-    }
+    if (phoneError) {
+  alert('Please fix phone number before saving.');
+  return;
+}
+  if (!profile.displayName.trim()) {
+  alert('Display Name is required.');
+  return;
+}
 
-    const allDiet = [
-      ...dropdownDiet.map(d => d.name),
-      ...customDiet
-    ];
+  const allDiet = [
+    ...dropdownDiet.map(d => d.name),
+    ...customDiet
+  ];
 
-    const updated = { ...profile, dietary: allDiet };
-    setLoading(true);
+  const updated = { ...profile, dietary: allDiet };
+  setLoading(true);
 
-    setTimeout(() => {
-      localStorage.setItem('user', JSON.stringify(updated));
-      setSession(updated);
-      setProfile(updated);
-      setLoading(false);
-      alert('Profile saved!');
-      if (onSave) onSave(updated);
-    }, 1500);
-  };
+  setTimeout(() => {
+    const users = JSON.parse(localStorage.getItem('mockUsers')) || [];
+    const current = getCurrentUser();
+
+    // Tìm user và cập nhật
+    const updatedUsers = users.map(u => 
+      u.username === current.username ? { ...u, ...updated } : u
+    );
+
+    // Lưu lại danh sách và session
+    localStorage.setItem('mockUsers', JSON.stringify(updatedUsers));
+    setSession({ ...current, ...updated });
+
+    setProfile(updated);
+    setLoading(false);
+    alert('Profile saved!');
+    if (onSave) onSave(updated);
+  }, 1500);
+};
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen ">
+      <div className="max-w-6xl mx-auto ">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Profile Card */}
           {!inlineMode && (
@@ -99,7 +134,7 @@ const ProfileEditForm = ({ onCancel, onSave, inlineMode = false }) => {
                         <i className="pi pi-check text-white text-xs"></i>
                       </div>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-1">{profile.username}</h3>
+                    <h3 className="text-xl font-bold text-gray-800 mb-1">{profile.displayName}</h3>
                     <p className="text-gray-600 text-sm mb-4">{profile.email}</p>
                     
                     {/* Profile Stats */}
@@ -147,14 +182,50 @@ const ProfileEditForm = ({ onCancel, onSave, inlineMode = false }) => {
                     Display Name
                   </label>
                   <InputText
-                    name="username"
-                    value={profile.username}
+                    name="displayName"
+                    value={profile.displayName}
                     onChange={handleChange}
                     className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
                     placeholder="Enter your display name"
                   />
                 </div>
 
+                {/* Phone and Gender */}
+                <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-3 flex items-center">
+                      <i className="pi pi-phone text-green-600 mr-2"></i>
+                      Phone Number
+                    </label>
+                    <InputText
+                      name="phone"
+                      value={profile.phone}
+                      onChange={handleChange}
+                      className={`w-full border-2 rounded-lg px-4 py-3 transition-all duration-300
+                        ${phoneError ? 'border-red-500 focus:ring-red-300' : 'border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200'}
+                      `}
+                      placeholder="Enter your phone number"
+                    />
+                    {phoneError && (
+                      <p className="text-red-500 text-sm mt-2">{phoneError}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-3 flex items-center">
+                      <i className="pi pi-user-edit text-purple-600 mr-2"></i>
+                      Gender
+                    </label>
+                    <Dropdown
+                      name="gender"
+                      value={profile.gender}
+                      options={genderOptions}
+                      onChange={(e) => setProfile({ ...profile, gender: e.value })}
+                      placeholder="Select your gender"
+                      className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300"
+                    />
+                  </div>
+                </div>
                 {/* Dietary Preferences */}
                 <div className="mb-8">
                   <label className="block text-gray-700 font-semibold mb-3 flex items-center">
@@ -293,7 +364,7 @@ const ProfileEditForm = ({ onCancel, onSave, inlineMode = false }) => {
                   )}
                   <Button
                     label={loading ? 'Saving...' : 'Save Changes'}
-                    className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 border-0 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 border-0 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl text-white"
                     onClick={handleSave}
                     disabled={loading}
                     icon={loading ? 'pi pi-spin pi-spinner' : 'pi pi-check'}
