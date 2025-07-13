@@ -2,16 +2,46 @@ import React, { useState, useEffect } from 'react';
 import { Card } from 'primereact/card';
 import { Paginator } from 'primereact/paginator';
 import { Rating } from 'primereact/rating';
-import { mockActivities } from '../../data/mockData';
+import recipies from '../../services/datas/recipies.json';
+
 
 const RecentActivityList = () => {
   const [activities, setActivities] = useState([]);
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(3);
 
-  useEffect(() => {
-    setActivities(mockActivities);
-  }, []);
+ useEffect(() => {
+  const mockUsers = JSON.parse(localStorage.getItem('mockUsers')) || [];
+
+  const userMap = mockUsers.reduce((acc, user) => {
+    acc[user.id] = user;
+    return acc;
+  }, {});
+
+  const activityList = [];
+
+  recipies.forEach((recipe) => {
+    recipe.comments?.forEach((comment) => {
+      const user = userMap[comment.userId] || {};
+
+      activityList.push({
+        id: `recipe-${recipe.id}-comment-${comment.id}`,
+        type: 'review',
+        target: recipe.name,
+        rating: recipe.ratings?.find(r => r.userId === comment.userId)?.rating || 0,
+        helpful: Math.floor(Math.random() * 10),
+        tags: recipe.categories || [],
+        user: {
+          name: user.displayName || `User ${comment.userId}`,
+          avatar: user.avatar || `https://i.pravatar.cc/150?img=${comment.userId}`
+        },
+        date: new Date(comment.timestamp).toLocaleDateString(),
+      });
+    });
+  });
+
+  setActivities(activityList);
+}, []);
 
   const onPageChange = (e) => {
     setFirst(e.first);
