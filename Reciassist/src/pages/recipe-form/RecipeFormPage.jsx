@@ -124,7 +124,9 @@ const RecipeFormPage = () => {
             ...prev,
             [field]: value
         }));
+        setInvalid(`recipe-${field}`, false);
     }
+
     const onNutritionChangeProps = (value, field) => {
         setRecipe(prev => ({
             ...prev,
@@ -209,7 +211,114 @@ const RecipeFormPage = () => {
         );
     }
 
+    const setInvalid = (elementOrId, isInvalid = true) => {
+        const el = typeof elementOrId === "string" ? document.getElementById(elementOrId) : elementOrId;
+
+        if (!el || !el.classList) {
+            console.warn("setInvalid: element not found or invalid", elementOrId);
+            return;
+        }
+
+        if (isInvalid) {
+            el.classList.add("p-invalid");
+        } else {
+            el.classList.remove("p-invalid");
+        }
+    };
+
+    const validateRecipe = () => {
+        let isValid = true;
+
+        // 🔹 Validate Name
+        if (!recipe.name || recipe.name.trim() === "") {
+            setInvalid("recipe-name", true);
+            isValid = false;
+        } else {
+            setInvalid("recipe-name", false);
+        }
+
+        // 🔹 Validate Image
+        if (!recipe.image) {
+            setInvalid("recipe-image", true);
+            isValid = false;
+        } else {
+            setInvalid("recipe-image", false);
+        }
+
+        // 🔹 Validate Categories
+        if (!recipe.categories || recipe.categories.length === 0) {
+            setInvalid("recipe-categories", true);
+            isValid = false;
+        } else {
+            setInvalid("recipe-categories", false);
+        }
+
+        // 🔹 Validate Servings
+        if (!recipe.cookingTime || recipe.cookingTime === "") {
+            setInvalid("recipe-cookingTime", true);
+            isValid = false;
+        } else {
+            setInvalid("recipe-cookingTime", false);
+        }
+
+        // 🔹 Validate Servings
+        if (!recipe.servings || recipe.servings < 1) {
+            setInvalid("recipe-servings", true);
+            isValid = false;
+        } else {
+            setInvalid("recipe-servings", false);
+        }
+
+        // 🔹 Validate Difficulty
+        if (recipe.difficulty == null || recipe.difficulty === 0) {
+            setInvalid("recipe-difficulty", true);
+            isValid = false;
+        } else {
+            setInvalid("recipe-difficulty", false);
+        }
+
+        // 🔹 Validate Description
+        if (!recipe.description || recipe.description.trim() === "") {
+            setInvalid("recipe-description", true);
+            isValid = false;
+        } else {
+            setInvalid("recipe-description", false);
+        }
+
+        // 🔹 Validate Ingredients
+        if (!recipe.ingredients || recipe.ingredients.length === 0) {
+            setInvalid("ingredient-section", true);
+            isValid = false;
+        } else {
+            const hasInvalid = recipe.ingredients.some(
+                (ing) => !ing.name || !ing.unit || ing.quantity == null
+            );
+            setInvalid("ingredient-section", hasInvalid);
+            if (hasInvalid) isValid = false;
+        }
+
+        // 🔹 Validate Instructions
+        if (!recipe.instructions || recipe.instructions.length === 0) {
+            setInvalid("instruction-section", true);
+            isValid = false;
+        } else {
+            const hasInvalid = recipe.instructions.some(
+                (ins) => !ins.description || ins.description.trim() === ""
+            );
+            setInvalid("instruction-section", hasInvalid);
+            if (hasInvalid) isValid = false;
+        }
+
+        return isValid;
+    };
+
+
     const saveRecipe = async () => {
+        if (!validateRecipe()) {
+            showToast("Please input required information!", "warn");
+            return;
+        }
+
         const _recipe = {...recipe};
 
         // ✅ Xử lý description (base64 -> image://id)
@@ -304,6 +413,7 @@ const RecipeFormPage = () => {
                             </div>
                             <div className="flex-grow-10 text-lg">
                                 <InputText
+                                    id="recipe-name"
                                     value={recipe.name}
                                     onChange={(e) => onRecipeChangeProps(e.target.value, "name")}
                                     className="w-full !border-1 rounded-lg pl-3"
@@ -337,6 +447,7 @@ const RecipeFormPage = () => {
                             </div>
                             <div className="flex-grow-10 text-lg">
                                 <MultiSelect
+                                    id="recipe-categories"
                                     value={recipe.categories}
                                     onChange={(e) => onRecipeChangeProps(e.value, "categories")}
                                     options={categories}
@@ -379,6 +490,7 @@ const RecipeFormPage = () => {
                             </div>
                             <div className="flex-grow-10 text-lg">
                                 <Calendar
+                                    id="recipe-cookingTime"
                                     value={recipe.cookingTime}
                                     onChange={(e) => onRecipeChangeProps(e.target.value, "cookingTime")}
                                     showIcon
@@ -393,6 +505,7 @@ const RecipeFormPage = () => {
                             </div>
                             <div className="flex-grow-10 text-lg">
                                 <InputNumber
+                                    id="recipe-servings"
                                     value={recipe.servings}
                                     onChange={(e) => onRecipeChangeProps(e.value, "servings")}
                                     showButtons
@@ -406,6 +519,7 @@ const RecipeFormPage = () => {
                             </div>
                             <div className="flex-grow-10 text-lg">
                                 <Rating
+                                    id="recipe-difficulty"
                                     value={recipe.difficulty}
                                     onChange={(e) => onRecipeChangeProps(e.value, "difficulty")}
                                     cancel={false}
@@ -418,11 +532,13 @@ const RecipeFormPage = () => {
                             <div className="text-lg font-semibold mb-2">Description:</div>
                             <div className="text-lg">
                                 <Editor
+                                    id="recipe-description"
                                     ref={descriptionEditorRef}
                                     value={recipe.description}
-                                    onTextChange={(e) =>
+                                    onTextChange={(e) => {
                                         setRecipe((prev) => ({...prev, description: e.htmlValue}))
-                                    }
+                                        setInvalid("recipe-description", false);
+                                    }}
                                     style={{
                                         minHeight: 320,
                                     }}
@@ -492,11 +608,20 @@ const RecipeFormPage = () => {
                         setRecipe={setRecipe}
                     />
                 </Panel>
-                <div className="flex flex-row justify-center gap-10">
-                    <Button className="border-1 px-5 py-3 rounded-2xl" onClick={() => saveRecipe()}>
+                <div className="flex flex-row justify-center gap-10 mb-10">
+                    <Button
+                        onClick={() => saveRecipe()}
+                        className="bg-gray-600 hover:bg-green-700 text-white px-6 py-3 rounded-2xl shadow-md transition duration-300 border-none"
+                    >
                         {id == null ? "Create new Recipe" : "Update Recipe"}
                     </Button>
-                    <Button className="border-1 px-5 py-3 rounded-2xl">Cancel</Button>
+
+                    <Button
+                        onClick={() => navigate(-1)}
+                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-2xl shadow-md transition duration-300 border border-gray-400"
+                    >
+                        Cancel
+                    </Button>
                 </div>
             </div>
         </div>
@@ -522,6 +647,7 @@ const RecipeImagePreview = ({imageBlob}) => {
 
     return (
         <img
+            id="recipe-image-preview"
             src={imageUrl}
             alt="Recipe preview"
             className="rounded-lg border shadow-md max-w-xs"
