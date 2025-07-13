@@ -102,12 +102,13 @@ const MainLayout = () => {
                      className="rounded-r-2xl border-t-2 border-r-2 border-b-2 p-5 bg-white dark:bg-gray-900 dark:border-gray-600"
                      header={leftSidebarHeaderTemplate}
                      showCloseIcon={false}
-
             >
                 <div className="mt-10 flex flex-col gap-y-10">
                     <SideBarItemUrl icon={<FontAwesomeIcon icon={faHome}/>} label="Homepage" url="/"/>
-                    <SideBarItemUrl icon={<FontAwesomeIcon icon={faBowlFood}/>} label="Create Recipe"
-                                    url="/recipe/form"/>
+                    {user &&
+                        <SideBarItemUrl icon={<FontAwesomeIcon icon={faBowlFood}/>} label="Create Recipe"
+                                        url="/recipe/form"/>
+                    }
                     <SideBarItemUrl icon={<FontAwesomeIcon icon={faBowlFood}/>} label="Recipes" url="/recipes"/>
                     <SideBarItemUrl icon={<FontAwesomeIcon icon={faUtensils}/>} label="Meal Planner"
                                     url="/meal-planner"/>
