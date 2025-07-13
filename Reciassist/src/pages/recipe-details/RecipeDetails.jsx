@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import { ArrowLeft, Clock, Users, ChefHat, Utensils, GripVertical, Edit3, Check, ChevronUp, ChevronDown } from 'lucide-react';
+import {ArrowLeft, ChefHat, ChevronDown, ChevronUp, Clock, GripVertical, Pencil, Users, Utensils} from 'lucide-react';
 import {Chart} from 'primereact/chart';
 import recipes from '../../services/datas/recipies.json';
 import SpaghettiImg from '../../assets/food/images/spaghetti-bolognese.jpg';
@@ -12,6 +12,7 @@ import BeefTacos from '../../assets/food/images/beef-tacos.jpg';
 import StarRating from './components/StarRating';
 import InfoCard from './components/InfoCard';
 import TabButton from './components/TabButton';
+
 
 const imageMap = {
     "flan-cake": SpaghettiImg,
@@ -25,7 +26,6 @@ const imageMap = {
 const RecipeDetail = () => {
     const user = JSON.parse(localStorage.getItem('loggedUser'));
     const isAuthenticated = !!user;
-
     const {slug} = useParams();
     const navigate = useNavigate();
 
@@ -181,12 +181,12 @@ const RecipeDetail = () => {
     }, [recipe]);
 
     // Transform ingredients to display format
-    const formattedIngredients = displayRecipe.ingredients?.map(ingredient => 
+    const formattedIngredients = displayRecipe.ingredients?.map(ingredient =>
         `${ingredient.quantity} ${ingredient.unit} ${ingredient.name}`
     ) || [];
 
     // Transform instructions to string array for reordering
-    const instructionTexts = displayRecipe.instructions?.map(instruction => 
+    const instructionTexts = displayRecipe.instructions?.map(instruction =>
         instruction.description.replace(/<[^>]*>/g, '') // Remove HTML tags
     ) || [];
 
@@ -259,11 +259,15 @@ const RecipeDetail = () => {
 
     // Get difficulty level text
     const getDifficultyText = (difficulty) => {
-        switch(difficulty) {
-            case 1: return 'Easy';
-            case 2: return 'Medium';
-            case 3: return 'Hard';
-            default: return 'N/A';
+        switch (difficulty) {
+            case 1:
+                return 'Easy';
+            case 2:
+                return 'Medium';
+            case 3:
+                return 'Hard';
+            default:
+                return 'N/A';
         }
     };
 
@@ -301,7 +305,7 @@ const RecipeDetail = () => {
                 }
             ]
         };
-        
+
         const options = {
             cutout: '70%',
             plugins: {
@@ -315,7 +319,7 @@ const RecipeDetail = () => {
 
         setChartData(data);
         setChartOptions(options);
-        
+
         setTimeout(() => {
             setIsLoaded(true);
         }, 300);
@@ -364,7 +368,8 @@ const RecipeDetail = () => {
                         onDragEnd={handleDragEnd}
                     >
                         <div className="flex-shrink-0">
-                            <div className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-orange-400 to-orange-600 text-white rounded-full font-bold shadow">
+                            <div
+                                className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-orange-400 to-orange-600 text-white rounded-full font-bold shadow">
                                 {idx + 1}
                             </div>
                         </div>
@@ -380,7 +385,7 @@ const RecipeDetail = () => {
                                         className="p-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                         title="Move up"
                                     >
-                                        <ChevronUp className="w-4 h-4" />
+                                        <ChevronUp className="w-4 h-4"/>
                                     </button>
                                     <button
                                         onClick={() => moveDown(idx)}
@@ -388,14 +393,14 @@ const RecipeDetail = () => {
                                         className="p-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                         title="Move down"
                                     >
-                                        <ChevronDown className="w-4 h-4" />
+                                        <ChevronDown className="w-4 h-4"/>
                                     </button>
                                 </div>
-                                <div 
+                                <div
                                     className="p-1 rounded bg-gray-200 hover:bg-gray-300 cursor-move transition-colors"
                                     title="Drag to reorder"
                                 >
-                                    <GripVertical className="w-4 h-4" />
+                                    <GripVertical className="w-4 h-4"/>
                                 </div>
                             </div>
                         )}
@@ -421,22 +426,32 @@ const RecipeDetail = () => {
     return (
         <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
             {/* Hero Section */}
-            <div className="relative h-[35vh] min-h-[300px] max-h-[450px] overflow-hidden max-w-4xl mx-auto rounded-2xl">
-                <img 
+            <div
+                className="relative h-[35vh] min-h-[300px] max-h-[450px] overflow-hidden max-w-4xl mx-auto rounded-2xl">
+                <img
                     src={imageUrl}
                     alt={displayRecipe.name || 'Recipe'}
                     className="absolute inset-0 w-full h-full object-cover"
                     loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"/>
+
                 {/* Back Button */}
-                <button 
+                <button
                     onClick={() => navigate(-1)}
                     className="absolute top-6 left-6 z-10 bg-white/20 backdrop-blur-sm p-3 rounded-full hover:bg-white/30 transition-all duration-300 group"
                 >
-                    <ArrowLeft className="w-5 h-5 text-white group-hover:transform group-hover:-translate-x-1 transition-transform" />
+                    <ArrowLeft
+                        className="w-5 h-5 text-white group-hover:transform group-hover:-translate-x-1 transition-transform"/>
                 </button>
+                {user?.user.id == currentRecipe.createBy && (
+                    <button
+                        onClick={() => navigate(`/recipe/form/${displayRecipe.id}`)}
+                        className="absolute top-6 right-6 z-10 bg-white/20 backdrop-blur-sm p-3 rounded-full hover:bg-white/30 transition-all duration-300 group"
+                    >
+                        <Pencil className="w-5 h-5 text-white group-hover:scale-110 transition-transform"/>
+                    </button>
+                )}
 
                 {/* Title Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -445,7 +460,7 @@ const RecipeDetail = () => {
                     }`}>
                         <h1 className="text-4xl font-bold mb-3 drop-shadow-lg">{displayRecipe.name || 'Unknown Recipe'}</h1>
                         <div className="flex items-center gap-4">
-                            <StarRating rating={Math.round(safeAverageRating)} size="w-5 h-5" />
+                            <StarRating rating={Math.round(safeAverageRating)} size="w-5 h-5"/>
                             <span className="text-lg font-semibold">
                                 {safeAverageRating > 0 ? `(${safeAverageRating.toFixed(1)})` : 'No ratings yet'}
                             </span>
@@ -455,10 +470,11 @@ const RecipeDetail = () => {
                                 {ratingBreakdown.map((count, idx) => (
                                     <div key={idx} className="flex items-center gap-2 text-sm">
                                         <div className="w-12 text-xs">{5 - idx} ★</div>
-                                        <div className="flex-1 bg-gray-200/30 h-2 rounded-full overflow-hidden min-w-[60px]">
+                                        <div
+                                            className="flex-1 bg-gray-200/30 h-2 rounded-full overflow-hidden min-w-[60px]">
                                             <div
                                                 className="bg-yellow-400 h-full transition-all duration-500"
-                                                style={{ width: `${displayRecipe.ratings.length > 0 ? (count / displayRecipe.ratings.length) * 100 : 0}%` }}
+                                                style={{width: `${displayRecipe.ratings.length > 0 ? (count / displayRecipe.ratings.length) * 100 : 0}%`}}
                                             ></div>
                                         </div>
                                         <div className="text-xs w-6 text-right">{count}</div>
@@ -474,72 +490,74 @@ const RecipeDetail = () => {
             <div className="max-w-4xl mx-auto px-6 -mt-7 relative z-10">
                 {/* Info Cards */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                    <InfoCard 
-                        icon={ChefHat} 
-                        label="Category" 
-                        value={displayRecipe.categories?.[0] || 'N/A'} 
-                        delay={100} 
-                        isLoaded={isLoaded} 
+                    <InfoCard
+                        icon={ChefHat}
+                        label="Category"
+                        value={displayRecipe.categories?.[0] || 'N/A'}
+                        delay={100}
+                        isLoaded={isLoaded}
                     />
-                    <InfoCard 
-                        icon={Utensils} 
-                        label="Level" 
-                        value={getDifficultyText(displayRecipe.difficulty)} 
-                        delay={200} 
-                        isLoaded={isLoaded} 
+                    <InfoCard
+                        icon={Utensils}
+                        label="Level"
+                        value={getDifficultyText(displayRecipe.difficulty)}
+                        delay={200}
+                        isLoaded={isLoaded}
                     />
-                    <InfoCard 
-                        icon={Clock} 
-                        label="Time" 
-                        value={`${recipe.cookingDuration} min`} 
-                        delay={300} 
-                        isLoaded={isLoaded} 
+                    <InfoCard
+                        icon={Clock}
+                        label="Time"
+                        value={`${recipe.cookingDuration} min`}
+                        delay={300}
+                        isLoaded={isLoaded}
                     />
-                    <InfoCard 
-                        icon={Users} 
-                        label="Servings" 
-                        value={displayRecipe.servings || 'N/A'} 
-                        delay={400} 
-                        isLoaded={isLoaded} 
+                    <InfoCard
+                        icon={Users}
+                        label="Servings"
+                        value={displayRecipe.servings || 'N/A'}
+                        delay={400}
+                        isLoaded={isLoaded}
                     />
                 </div>
 
                 {/* Description Card */}
-                <div className={`bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl mb-8 transform transition-all duration-700 ${
-                    isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`} style={{ transitionDelay: '500ms' }}>
+                <div
+                    className={`bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl mb-8 transform transition-all duration-700 ${
+                        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    }`} style={{transitionDelay: '500ms'}}>
                     <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                         About This Recipe
                     </h2>
-                    <div 
+                    <div
                         className="text-gray-700 leading-relaxed text-lg"
-                        dangerouslySetInnerHTML={{ __html: displayRecipe.description || 'No description available.' }}
+                        dangerouslySetInnerHTML={{__html: displayRecipe.description || 'No description available.'}}
                     />
                 </div>
 
                 {/* Tabbed Content */}
-                <div className={`bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden transform transition-all duration-700 ${
-                    isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`} style={{ transitionDelay: '600ms' }}>
+                <div
+                    className={`bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden transform transition-all duration-700 ${
+                        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    }`} style={{transitionDelay: '600ms'}}>
                     {/* Tab Navigation */}
                     <div className="flex flex-wrap gap-2 p-6 border-b border-gray-200">
-                        <TabButton 
-                            id="ingredients" 
-                            label="Ingredients" 
-                            isActive={activeTab === 'ingredients'} 
-                            onClick={setActiveTab} 
+                        <TabButton
+                            id="ingredients"
+                            label="Ingredients"
+                            isActive={activeTab === 'ingredients'}
+                            onClick={setActiveTab}
                         />
-                        <TabButton 
-                            id="instructions" 
-                            label="Instructions" 
-                            isActive={activeTab === 'instructions'} 
-                            onClick={setActiveTab} 
+                        <TabButton
+                            id="instructions"
+                            label="Instructions"
+                            isActive={activeTab === 'instructions'}
+                            onClick={setActiveTab}
                         />
-                        <TabButton 
-                            id="nutrition" 
-                            label="Nutrition" 
-                            isActive={activeTab === 'nutrition'} 
-                            onClick={setActiveTab} 
+                        <TabButton
+                            id="nutrition"
+                            label="Nutrition"
+                            isActive={activeTab === 'nutrition'}
+                            onClick={setActiveTab}
                         />
                     </div>
 
@@ -548,12 +566,13 @@ const RecipeDetail = () => {
                         {activeTab === 'ingredients' && (
                             <div className="space-y-3">
                                 {formattedIngredients.map((ingredient, idx) => (
-                                    <div 
+                                    <div
                                         key={idx}
                                         className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 transition-all duration-200 transform hover:translate-x-2"
-                                        style={{ animationDelay: `${idx * 100}ms` }}
+                                        style={{animationDelay: `${idx * 100}ms`}}
                                     >
-                                        <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full"></div>
+                                        <div
+                                            className="w-2 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full"></div>
                                         <span className="text-gray-700">{ingredient}</span>
                                     </div>
                                 ))}
@@ -565,21 +584,29 @@ const RecipeDetail = () => {
                         {activeTab === 'nutrition' && (
                             <div className="grid md:grid-cols-2 gap-8 items-center">
                                 <div className="space-y-4">
-                                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+                                    <div
+                                        className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
                                         <span className="font-semibold text-gray-700">Calories</span>
-                                        <span className="text-2xl font-bold text-gray-800">{displayRecipe.nutrition?.calories || 'N/A'}</span>
+                                        <span
+                                            className="text-2xl font-bold text-gray-800">{displayRecipe.nutrition?.calories || 'N/A'}</span>
                                     </div>
-                                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+                                    <div
+                                        className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
                                         <span className="font-semibold text-gray-700">Protein</span>
-                                        <span className="text-xl font-bold text-blue-600">{displayRecipe.nutrition?.protein || 0}g</span>
+                                        <span
+                                            className="text-xl font-bold text-blue-600">{displayRecipe.nutrition?.protein || 0}g</span>
                                     </div>
-                                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg">
+                                    <div
+                                        className="flex justify-between items-center p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg">
                                         <span className="font-semibold text-gray-700">Carbs</span>
-                                        <span className="text-xl font-bold text-yellow-600">{displayRecipe.nutrition?.carbohydrates || 0}g</span>
+                                        <span
+                                            className="text-xl font-bold text-yellow-600">{displayRecipe.nutrition?.carbohydrates || 0}g</span>
                                     </div>
-                                    <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50 to-teal-50 rounded-lg">
+                                    <div
+                                        className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50 to-teal-50 rounded-lg">
                                         <span className="font-semibold text-gray-700">Fat</span>
-                                        <span className="text-xl font-bold text-green-600">{displayRecipe.nutrition?.fat || 0}g</span>
+                                        <span
+                                            className="text-xl font-bold text-green-600">{displayRecipe.nutrition?.fat || 0}g</span>
                                     </div>
                                 </div>
                                 <div className="flex justify-center">
@@ -611,9 +638,10 @@ const RecipeDetail = () => {
                 </div>
 
                 {/* Comments Section */}
-                <div className={`bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl mt-8 transform transition-all duration-700 ${
-                    isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`} style={{ transitionDelay: '700ms' }}>
+                <div
+                    className={`bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl mt-8 transform transition-all duration-700 ${
+                        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    }`} style={{transitionDelay: '700ms'}}>
                     {displayRecipe.ratings?.length > 0 && (
                         <div className="mb-6">
                             <div className="flex items-center gap-3">
@@ -636,9 +664,9 @@ const RecipeDetail = () => {
                     <div className="space-y-6">
                         {formattedComments.map((comment, idx) => {
                             const userRating = getRatingByUserId(comment.userId);
-                            
+
                             return (
-                                <div 
+                                <div
                                     key={comment.id || idx}
                                     className="bg-gradient-to-r from-white to-blue-50 border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
                                 >
@@ -651,8 +679,9 @@ const RecipeDetail = () => {
                                         </div>
                                         {userRating && (
                                             <div className="flex items-center gap-2">
-                                                <StarRating rating={userRating} />
-                                                <span className="text-sm font-medium text-gray-600">({userRating})</span>
+                                                <StarRating rating={userRating}/>
+                                                <span
+                                                    className="text-sm font-medium text-gray-600">({userRating})</span>
                                             </div>
                                         )}
                                     </div>
@@ -670,7 +699,8 @@ const RecipeDetail = () => {
                     )}
                     <div className="mt-8 text-center">
                         {!isAuthenticated ? (
-                            <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 p-6 rounded-lg max-w-xl mx-auto">
+                            <div
+                                className="bg-yellow-50 border border-yellow-300 text-yellow-800 p-6 rounded-lg max-w-xl mx-auto">
                                 <p className="text-lg font-semibold mb-2">You must be signed in to leave a review.</p>
                                 <button
                                     onClick={() => navigate('/sign-in')}

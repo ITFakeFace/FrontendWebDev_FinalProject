@@ -20,7 +20,6 @@ import {useToast} from "../../context/ToastStore.js";
 import {classNames} from "primereact/utils";
 import {createRecipe, getFormattedRecipeId, updateRecipe} from "../../services/recipeService.js";
 
-let temp = 0;
 const RecipeFormPage = () => {
     const {user} = useUserStore();
 
@@ -256,14 +255,16 @@ const RecipeFormPage = () => {
         }
 
         // Kiểm tra quyền truy cập
-        console.log(rawRecipe.createdBy != user.id)
-        if (user && rawRecipe.createdBy != user.id) {
+        setTimeout(() => {
+            console.log(rawRecipe.createBy != user.id)
+        }, 3000);
+        if (user && rawRecipe.createBy != user.id) {
             showToast("You don't have permission to access this recipe", "warn");
 
             if (window.history.length > 1) {
-                navigate(-1);
+                // navigate(-1);
             } else {
-                navigate("/recipies");
+                // navigate("/recipies");
             }
 
             return;
